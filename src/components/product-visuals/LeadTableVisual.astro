@@ -1,0 +1,77 @@
+---
+/**
+ * Only renders fields verified in docs/01-PRODUCT-BRIEF.md (business name,
+ * category) plus a workflow-only "status" column that reflects UI state,
+ * not a data-collection capability. Do not add columns like phone, email,
+ * or rating here until they are confirmed — see src/data/workflow.ts.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const rows = [
+  { name: "Northline Plumbing", category: "Plumber", status: "Collected" },
+  { name: "ClearFlow Septic", category: "Septic service", status: "Collected" },
+  { name: "Summit Crawlspace", category: "Crawlspace repair", status: "Reviewing" },
+  { name: "Greenway Drainage", category: "Drainage", status: "Collected" },
+];
+---
+
+<div
+  class:list={["glass-panel overflow-hidden rounded-[var(--radius-card)]", className]}
+  role="img"
+  aria-label="Illustrative structured table of collected local-business leads with business name, category, and review status"
+>
+  <div
+    class="grid grid-cols-[1.6fr_1fr_0.8fr] gap-2 border-b border-[var(--color-border)] px-5 py-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+  >
+    <span>Business</span>
+    <span>Category</span>
+    <span>Status</span>
+  </div>
+  <ul>
+    {
+      rows.map((row, index) => (
+        <li
+          class="table-row grid grid-cols-[1.6fr_1fr_0.8fr] items-center gap-2 border-b border-[var(--color-border)] px-5 py-3.5 text-sm last:border-b-0"
+          style={`animation-delay:${index * 90}ms`}
+        >
+          <span class="truncate font-medium text-[var(--color-text-primary)]">{row.name}</span>
+          <span class="truncate text-[var(--color-text-secondary)]">{row.category}</span>
+          <span
+            class:list={[
+              "w-fit rounded-full px-2.5 py-1 text-xs font-medium",
+              row.status === "Collected"
+                ? "bg-[var(--color-success)]/12 text-[var(--color-success)]"
+                : "bg-[var(--color-warning)]/12 text-[var(--color-warning)]",
+            ]}
+          >
+            {row.status}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .table-row {
+    animation: row-settle 500ms var(--ease-orbit) backwards;
+  }
+  @keyframes row-settle {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .table-row {
+      animation: none;
+    }
+  }
+</style>

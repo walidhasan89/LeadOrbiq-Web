@@ -1,0 +1,394 @@
+---
+import { siteConfig } from "@data/site";
+
+const topics = [
+  "Product support",
+  "Billing question",
+  "Feature question",
+  "Partnership",
+  "Privacy request",
+  "General message",
+];
+---
+
+<form
+  id="contact-form"
+  novalidate
+  data-endpoint={siteConfig.contactEndpoint}
+  class="flex flex-col gap-6"
+>
+  <div
+    id="form-error-summary"
+    role="alert"
+    tabindex="-1"
+    class="hidden rounded-[var(--radius-md)] border border-[var(--color-danger)]/40 bg-[var(--color-danger)]/8 px-5 py-4 text-sm text-[var(--color-danger)]"
+  >
+    <p class="font-semibold">
+      Your message could not be sent. Check the highlighted fields and try again.
+    </p>
+    <ul id="form-error-list" class="mt-2 flex list-disc flex-col gap-1 pl-5"></ul>
+  </div>
+
+  <div
+    id="form-success"
+    role="status"
+    tabindex="-1"
+    class="hidden rounded-[var(--radius-md)] border border-[var(--color-success)]/40 bg-[var(--color-success)]/8 px-5 py-4 text-sm text-[var(--color-success)]"
+  >
+    Thanks—your message has been received.
+  </div>
+
+  <div
+    id="form-unconfigured"
+    role="status"
+    tabindex="-1"
+    class="hidden rounded-[var(--radius-md)] border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/8 px-5 py-4 text-sm text-[var(--color-text-secondary)]"
+  >
+    <p>
+      <strong class="text-[var(--color-text-primary)]"
+        >This form isn't connected to a live inbox yet.</strong
+      >
+      Your details were validated but not sent anywhere. In the meantime, email us directly at
+      <a
+        class="font-medium text-[var(--color-brand)] underline-offset-2 hover:underline"
+        href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a
+      >.
+    </p>
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="name" class="text-sm font-medium text-[var(--color-text-primary)]">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        autocomplete="name"
+        class="form-input"
+        aria-describedby="name-error"
+      />
+      <p id="name-error" class="field-error"></p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="email" class="text-sm font-medium text-[var(--color-text-primary)]">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        autocomplete="email"
+        class="form-input"
+        aria-describedby="email-error"
+      />
+      <p id="email-error" class="field-error"></p>
+    </div>
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="company" class="text-sm font-medium text-[var(--color-text-primary)]">
+        Company <span class="font-normal text-[var(--color-text-secondary)]">(optional)</span>
+      </label>
+      <input
+        type="text"
+        id="company"
+        name="company"
+        autocomplete="organization"
+        class="form-input"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="topic" class="text-sm font-medium text-[var(--color-text-primary)]">Topic</label>
+      <select id="topic" name="topic" required class="form-input" aria-describedby="topic-error">
+        <option value="" selected disabled>Choose a topic</option>
+        {topics.map((topic) => <option value={topic}>{topic}</option>)}
+      </select>
+      <p id="topic-error" class="field-error"></p>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="message" class="text-sm font-medium text-[var(--color-text-primary)]">Message</label
+    >
+    <textarea
+      id="message"
+      name="message"
+      required
+      minlength="20"
+      rows="6"
+      class="form-input resize-y"
+      aria-describedby="message-error"></textarea>
+    <p id="message-error" class="field-error"></p>
+  </div>
+
+  <!-- Honeypot: hidden from real users, left blank; filled fields signal automated spam. -->
+  <div class="hidden" aria-hidden="true">
+    <label for="website">Leave this field empty</label>
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="flex items-start gap-3">
+    <input
+      type="checkbox"
+      id="consent"
+      name="consent"
+      required
+      class="mt-1 h-4 w-4 shrink-0 rounded border-[var(--color-border-strong)] text-[var(--color-brand)]"
+      aria-describedby="consent-error"
+    />
+    <label for="consent" class="text-sm text-[var(--color-text-secondary)]">
+      I understand my information will be used to respond to this request. Read our
+      <a
+        href="/privacy-policy/"
+        class="font-medium text-[var(--color-brand)] underline-offset-2 hover:underline"
+      >
+        Privacy Policy
+      </a>.
+    </label>
+  </div>
+  <p id="consent-error" class="field-error"></p>
+
+  <button
+    type="submit"
+    id="contact-submit"
+    class="inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-[var(--radius-button)] bg-[image:var(--gradient-brand)] px-7 font-semibold text-white shadow-[var(--shadow-glow)] transition-transform duration-[var(--duration-control)] hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60"
+  >
+    <span id="submit-label">Send message</span>
+    <svg
+      id="submit-spinner"
+      class="hidden h-4 w-4 animate-spin"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle class="opacity-25" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"
+      ></circle>
+      <path
+        class="opacity-90"
+        d="M21 12a9 9 0 0 0-9-9"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"></path>
+    </svg>
+  </button>
+</form>
+
+<style>
+  .form-input {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    transition: border-color var(--duration-control) var(--ease-orbit);
+  }
+  .form-input:focus-visible {
+    border-color: var(--color-brand);
+    outline: none;
+  }
+  .form-input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+  .field-error {
+    /* Matches the inherited `p { line-height: 1.65 }` from global.css so
+       toggling error text never changes this element's rendered height —
+       a height change here shifts every control below it during a click.
+       Error copy is kept short enough to fit on one line at this size. */
+    min-height: 1.65em;
+    font-size: 0.8rem;
+    color: var(--color-danger);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  if (form) {
+    const endpoint = form.dataset.endpoint ?? "";
+    const submitBtn = document.getElementById("contact-submit") as HTMLButtonElement;
+    const submitLabel = document.getElementById("submit-label")!;
+    const submitSpinner = document.getElementById("submit-spinner")!;
+    const errorSummary = document.getElementById("form-error-summary")!;
+    const errorList = document.getElementById("form-error-list")!;
+    const successPanel = document.getElementById("form-success")!;
+    const unconfiguredPanel = document.getElementById("form-unconfigured")!;
+
+    const fields = ["name", "email", "topic", "message", "consent"] as const;
+
+    function fieldEl(name: string) {
+      return form!.elements.namedItem(name) as
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
+    }
+
+    // Error text swaps in place (reserved min-height in CSS) rather than
+    // toggling `hidden`, which would change the field's box height and can
+    // shift nearby controls out from under an in-progress click/tap.
+    function setFieldError(name: string, message: string) {
+      const input = fieldEl(name);
+      const errorEl = document.getElementById(`${name}-error`);
+      if (input) input.setAttribute("aria-invalid", "true");
+      if (errorEl) errorEl.textContent = message;
+    }
+
+    function clearFieldError(name: string) {
+      const input = fieldEl(name);
+      const errorEl = document.getElementById(`${name}-error`);
+      if (input) input.removeAttribute("aria-invalid");
+      if (errorEl) errorEl.textContent = "";
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Each validator checks exactly one field and returns its inline and
+    // summary-list copy. Kept separate from the summary panel so fixing one
+    // field never touches the shared error list — rebuilding that list
+    // changes its height and, sitting above the fields, would shift every
+    // control below it (including mid-click) each time an error clears.
+    const fieldValidators: Record<
+      (typeof fields)[number],
+      () => { valid: boolean; inline: string; summary: string }
+    > = {
+      name: () => {
+        const value = (fieldEl("name") as HTMLInputElement).value.trim();
+        return value
+          ? { valid: true, inline: "", summary: "" }
+          : { valid: false, inline: "Enter your name.", summary: "Name is required." };
+      },
+      email: () => {
+        const value = (fieldEl("email") as HTMLInputElement).value.trim();
+        return value && emailPattern.test(value)
+          ? { valid: true, inline: "", summary: "" }
+          : {
+              valid: false,
+              inline: "Enter a valid email address.",
+              summary: "A valid email is required.",
+            };
+      },
+      topic: () => {
+        const value = (fieldEl("topic") as HTMLSelectElement).value;
+        return value
+          ? { valid: true, inline: "", summary: "" }
+          : { valid: false, inline: "Choose a topic.", summary: "Topic is required." };
+      },
+      message: () => {
+        const value = (fieldEl("message") as HTMLTextAreaElement).value.trim();
+        return value.length >= 20
+          ? { valid: true, inline: "", summary: "" }
+          : {
+              valid: false,
+              inline: "Please add a few more details.",
+              summary: "Message is too short.",
+            };
+      },
+      consent: () => {
+        const checked = (fieldEl("consent") as HTMLInputElement).checked;
+        return checked
+          ? { valid: true, inline: "", summary: "" }
+          : {
+              valid: false,
+              inline: "Please acknowledge to continue.",
+              summary: "Privacy acknowledgment is required.",
+            };
+      },
+    };
+
+    function validateField(name: (typeof fields)[number]): boolean {
+      const result = fieldValidators[name]();
+      if (result.valid) clearFieldError(name);
+      else setFieldError(name, result.inline);
+      return result.valid;
+    }
+
+    function validate(focusSummaryOnError = true): boolean {
+      const messages: string[] = [];
+      let isValid = true;
+
+      fields.forEach((name) => {
+        const result = fieldValidators[name]();
+        if (result.valid) {
+          clearFieldError(name);
+        } else {
+          setFieldError(name, result.inline);
+          messages.push(result.summary);
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        errorList.innerHTML = messages.map((msg) => `<li>${msg}</li>`).join("");
+        errorSummary.classList.remove("hidden");
+        if (focusSummaryOnError) errorSummary.focus();
+      } else {
+        errorSummary.classList.add("hidden");
+      }
+
+      return isValid;
+    }
+
+    fields.forEach((name) => {
+      const input = fieldEl(name);
+      // Re-validate quietly on blur: updates only this field's own inline
+      // message, never the shared summary list (see fieldValidators note).
+      input?.addEventListener("blur", () => {
+        if (input.getAttribute("aria-invalid") === "true") validateField(name);
+      });
+    });
+
+    let isSubmitting = false;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (isSubmitting) return;
+
+      successPanel.classList.add("hidden");
+      unconfiguredPanel.classList.add("hidden");
+
+      const honeypot = fieldEl("website") as HTMLInputElement;
+      if (honeypot?.value) return; // Silently drop likely-automated submissions.
+
+      if (!validate()) return;
+
+      isSubmitting = true;
+      submitBtn.disabled = true;
+      submitLabel.textContent = "Sending…";
+      submitSpinner.classList.remove("hidden");
+
+      try {
+        if (!endpoint) {
+          await new Promise((resolve) => setTimeout(resolve, 400));
+          unconfiguredPanel.classList.remove("hidden");
+          unconfiguredPanel.focus();
+          return;
+        }
+
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error("Request failed");
+
+        form.reset();
+        successPanel.classList.remove("hidden");
+        successPanel.focus();
+      } catch {
+        errorList.innerHTML =
+          "<li>The message could not be sent. Please try again in a moment.</li>";
+        errorSummary.classList.remove("hidden");
+        errorSummary.focus();
+      } finally {
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitLabel.textContent = "Send message";
+        submitSpinner.classList.add("hidden");
+      }
+    });
+  }
+</script>

@@ -1,0 +1,55 @@
+---
+import Container from "@components/common/Container.astro";
+import Button from "@components/common/Button.astro";
+import HeroVisual from "@components/product-visuals/HeroVisual.astro";
+import GlowBackground from "@components/product-visuals/GlowBackground.astro";
+import { siteConfig } from "@data/site";
+---
+
+<section id="hero" data-rail-section class="relative overflow-hidden pb-20 pt-16 sm:pt-20">
+  <GlowBackground variant="hero" />
+  <Container size="wide">
+    <div class="grid items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-10">
+      <div class="flex flex-col items-start gap-6">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-1.5 text-sm font-medium text-[var(--color-brand)]"
+        >
+          Google Maps lead collection, organized
+        </span>
+        <h1 class="balance text-h1 font-semibold text-[var(--color-text-primary)]">
+          Turn local business searches into outreach-ready lead lists.
+        </h1>
+        <p class="pretty max-w-xl text-body-lg text-[var(--color-text-secondary)]">
+          LeadOrbiq helps you collect and organize useful business information while researching
+          prospects on Google Maps—without spending hours copying data between tabs.
+        </p>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <Button href={siteConfig.chromeStoreUrl} external size="lg">Add to Chrome</Button>
+          <Button href="#how-it-works" variant="secondary" size="lg" data-scroll-link>
+            See How It Works
+          </Button>
+        </div>
+        <p class="text-sm text-[var(--color-text-secondary)]">
+          Chrome extension. Review permissions before installing.
+        </p>
+      </div>
+
+      <HeroVisual />
+    </div>
+  </Container>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>("[data-scroll-link]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href") || "";
+      if (!href.startsWith("#")) return;
+      const target = document.getElementById(href.slice(1));
+      if (!target) return;
+      event.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top, behavior: "smooth" });
+      history.replaceState(null, "", href);
+    });
+  });
+</script>

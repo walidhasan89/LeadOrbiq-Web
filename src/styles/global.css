@@ -1,0 +1,246 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/*
+  Font note: Satoshi is the specified brand typeface, but no licensed font
+  files were supplied with this build. Self-hosting unlicensed font files is
+  not permitted (see docs/04-DESIGN-SYSTEM.md), so the stack falls through to
+  a metrically similar system stack until licensed Satoshi files are added to
+  public/fonts and registered here. See docs/IMPLEMENTATION-STATUS.md.
+*/
+@theme inline {
+  --font-sans:
+    "Satoshi", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-bg: var(--color-bg);
+  --color-bg-soft: var(--color-bg-soft);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-surface: var(--color-surface);
+  --color-surface-strong: var(--color-surface-strong);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-inverted: var(--color-text-inverted);
+
+  --color-brand: var(--color-brand);
+  --color-brand-violet: var(--color-brand-violet);
+  --color-accent: var(--color-accent);
+  --color-mint: var(--color-mint);
+  --color-warm: var(--color-warm);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-button: var(--radius-button);
+  --radius-card: var(--radius-card);
+  --radius-panel: var(--radius-panel);
+  --radius-pill: var(--radius-pill);
+
+  --container-narrow: var(--container-narrow);
+  --container-content: var(--container-content);
+  --container-main: var(--container-main);
+  --container-wide: var(--container-wide);
+
+  --text-display-xl: clamp(3.5rem, 8vw, 7.5rem);
+  --text-display: clamp(3rem, 6vw, 6rem);
+  --text-h1: clamp(2.75rem, 5vw, 5rem);
+  --text-h2: clamp(2.1rem, 4vw, 3.75rem);
+  --text-h3: clamp(1.5rem, 2.5vw, 2.25rem);
+  --text-h4: 1.25rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.75rem;
+
+  --animate-orbit-spin: orbit-spin var(--duration-ambient) linear infinite;
+  --animate-drift: drift 18s var(--ease-orbit) infinite;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    font-weight: 600;
+  }
+
+  p {
+    line-height: 1.65;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-brand) 35%, transparent);
+    color: var(--color-text-primary);
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-narrow {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+  }
+
+  .container-content {
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+  }
+
+  .container-main {
+    max-width: var(--container-main);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+  }
+
+  .container-wide {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+  }
+
+  .section-spacing {
+    padding-block: var(--section-spacing-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .section-spacing {
+      padding-block: var(--section-spacing-tablet);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .section-spacing {
+      padding-block: var(--section-spacing);
+    }
+  }
+
+  .glass-panel {
+    background-color: var(--color-surface);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-elevation), var(--shadow-inner-highlight);
+    border-radius: var(--radius-panel);
+  }
+
+  .glass-panel-strong {
+    background-color: var(--color-surface-strong);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid var(--color-border-strong);
+    box-shadow: var(--shadow-elevation), var(--shadow-inner-highlight);
+  }
+
+  .text-gradient-brand {
+    background-image: var(--gradient-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    z-index: 100;
+    background: var(--color-bg-elevated);
+    color: var(--color-text-primary);
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-strong);
+    box-shadow: var(--shadow-elevation);
+    transition: top var(--duration-control) var(--ease-orbit);
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .balance {
+    text-wrap: balance;
+  }
+
+  .pretty {
+    text-wrap: pretty;
+  }
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}

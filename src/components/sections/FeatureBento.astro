@@ -1,0 +1,36 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import FeatureCard from "@components/common/FeatureCard.astro";
+import { bentoFeatures } from "@data/features";
+
+const icons: Array<
+  "map" | "grid" | "clock" | "review" | "layers" | "export" | "duplicate" | "search"
+> = ["map", "grid", "clock", "review", "layers", "export", "duplicate", "search"];
+---
+
+<section
+  id="features"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="wide">
+    <SectionHeading
+      eyebrow="Built for practical prospecting"
+      title="The structure you need without a complicated workflow."
+    />
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        bentoFeatures.map((feature, index) => (
+          <FeatureCard
+            title={feature.title}
+            description={feature.description}
+            verified={feature.verified}
+            icon={icons[index % icons.length]}
+            class={index === 0 ? "sm:col-span-2" : undefined}
+          />
+        ))
+      }
+    </div>
+  </Container>
+</section>

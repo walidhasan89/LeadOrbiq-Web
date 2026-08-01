@@ -1,0 +1,65 @@
+---
+/** Shows scattered, copy-pasted fragments resolving into organized rows. */
+---
+
+<div
+  class="grid gap-6 sm:grid-cols-2"
+  role="img"
+  aria-label="Illustrative comparison of scattered copy-pasted notes becoming organized, structured lead rows"
+>
+  <div class="glass-panel flex flex-col gap-3 rounded-[var(--radius-card)] p-5">
+    <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+      >Manual notes</span
+    >
+    <div class="flex flex-col gap-2.5">
+      <p
+        class="messy-scrap w-[88%] -rotate-1 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/70 px-3 py-2 text-xs text-[var(--color-text-secondary)]"
+      >
+        northline plumbing - denver - call later??
+      </p>
+      <p
+        class="messy-scrap w-[74%] rotate-1 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/70 px-3 py-2 text-xs text-[var(--color-text-secondary)]"
+      >
+        clearflow septic maybe dup?
+      </p>
+      <p
+        class="messy-scrap w-[95%] -rotate-1 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/70 px-3 py-2 text-xs text-[var(--color-text-secondary)]"
+      >
+        greenway — check site, tab still open
+      </p>
+    </div>
+  </div>
+
+  <div class="glass-panel-strong flex flex-col gap-3 rounded-[var(--radius-card)] p-5">
+    <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]"
+      >LeadOrbiq list</span
+    >
+    <div class="flex flex-col gap-2">
+      {
+        ["Northline Plumbing", "ClearFlow Septic", "Greenway Drainage"].map((name) => (
+          <div class="flex items-center gap-2.5 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/60 px-3 py-2.5 text-sm">
+            <svg
+              aria-hidden="true"
+              class="h-4 w-4 shrink-0 text-[var(--color-success)]"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+            </svg>
+            <span class="font-medium text-[var(--color-text-primary)]">{name}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .messy-scrap {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+  }
+</style>

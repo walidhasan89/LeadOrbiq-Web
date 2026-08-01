@@ -1,0 +1,38 @@
+---
+import MarketingLayout from "@layouts/MarketingLayout.astro";
+import Container from "@components/common/Container.astro";
+import Button from "@components/common/Button.astro";
+import GlowBackground from "@components/product-visuals/GlowBackground.astro";
+import LogoMark from "@components/common/LogoMark.astro";
+---
+
+<MarketingLayout
+  title="Page not found — LeadOrbiq"
+  description="The page you're looking for may have moved or the address may be incorrect."
+  pathname="/404/"
+  noindex={true}
+>
+  <section class="relative flex min-h-[70vh] items-center overflow-hidden py-20">
+    <GlowBackground variant="hero" />
+    <Container size="content">
+      <div class="flex flex-col items-center gap-6 text-center">
+        <span
+          class="flex h-16 w-16 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]"
+          aria-hidden="true"
+        >
+          <LogoMark size={30} />
+        </span>
+        <h1 class="balance text-h1 font-semibold text-[var(--color-text-primary)]">
+          This lead went off the map.
+        </h1>
+        <p class="max-w-md text-body-lg text-[var(--color-text-secondary)]">
+          The page may have moved, or the address may be incorrect.
+        </p>
+        <div class="mt-2 flex flex-col gap-4 sm:flex-row">
+          <Button href="/" size="lg">Return Home</Button>
+          <Button href="/help/" variant="secondary" size="lg">Visit Help Center</Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</MarketingLayout>

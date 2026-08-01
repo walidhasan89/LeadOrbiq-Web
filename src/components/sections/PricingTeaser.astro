@@ -1,0 +1,25 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import Button from "@components/common/Button.astro";
+---
+
+<section
+  id="pricing"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="content">
+    <div
+      class="glass-panel flex flex-col items-center gap-6 rounded-[var(--radius-panel)] p-10 text-center sm:p-14"
+    >
+      <SectionHeading
+        align="center"
+        eyebrow="Simple options"
+        title="Choose the workflow that fits your prospecting."
+        body="Pricing, limits, and included features will be shown clearly once the final plan structure is confirmed."
+      />
+      <Button href="/pricing/" size="lg">View Pricing</Button>
+    </div>
+  </Container>
+</section>

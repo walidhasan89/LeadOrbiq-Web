@@ -1,0 +1,47 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import Button from "@components/common/Button.astro";
+
+const points = [
+  {
+    title: "Clear permission disclosure",
+    desc: "Review what LeadOrbiq requests before you install it.",
+  },
+  { title: "Minimal necessary access", desc: "Permissions are scoped to what the workflow needs." },
+  { title: "User responsibility", desc: "You control how collected information is used." },
+  { title: "Respectful outreach", desc: "Personalize your messages and honor opt-out requests." },
+];
+---
+
+<section
+  id="trust"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="wide">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
+      <SectionHeading
+        eyebrow="Research responsibly"
+        title="Better prospecting respects people, platforms, and the law."
+        body="LeadOrbiq should support thoughtful business research—not spam. Verify important information, follow applicable privacy and marketing laws, respect platform terms, identify yourself accurately, personalize your outreach, and provide appropriate ways for recipients to opt out."
+      />
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {
+          points.map((point) => (
+            <div class="flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+              <h3 class="text-sm font-semibold text-[var(--color-text-primary)]">{point.title}</h3>
+              <p class="text-sm text-[var(--color-text-secondary)]">{point.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+      <Button href="/privacy-policy/" variant="text">Read Privacy Policy →</Button>
+      <Button href="/terms-of-service/" variant="text">Read Terms of Service →</Button>
+    </div>
+  </Container>
+</section>

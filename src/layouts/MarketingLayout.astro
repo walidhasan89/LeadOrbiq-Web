@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SiteHeader from "@components/navigation/SiteHeader.astro";
+import SiteFooter from "@components/navigation/SiteFooter.astro";
+import SectionRail from "@components/navigation/SectionRail.astro";
+import TrustStrip from "@components/sections/TrustStrip.astro";
+import Breadcrumbs from "@components/seo/Breadcrumbs.astro";
+import StructuredData from "@components/seo/StructuredData.astro";
+import type { BreadcrumbEntry } from "@utils/seo";
+import type { SEOProps } from "@/types";
+
+interface Props extends SEOProps {
+  showSectionRail?: boolean;
+  showTrustStrip?: boolean;
+  breadcrumbs?: BreadcrumbEntry[];
+  schemas?: Record<string, unknown>[];
+}
+
+const {
+  showSectionRail = false,
+  showTrustStrip = false,
+  breadcrumbs,
+  schemas = [],
+  ...seo
+} = Astro.props;
+---
+
+<BaseLayout {...seo}>
+  {showTrustStrip && <TrustStrip />}
+  <div id="scroll-sentinel" class="h-px w-full" aria-hidden="true"></div>
+  <SiteHeader />
+  {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+  <main id="main-content" tabindex="-1" class="relative">
+    <slot />
+  </main>
+  {showSectionRail && <SectionRail />}
+  <SiteFooter />
+  {schemas.length > 0 && <StructuredData schemas={schemas} />}
+</BaseLayout>

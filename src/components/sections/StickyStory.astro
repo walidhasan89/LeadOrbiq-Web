@@ -1,0 +1,62 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import LeadTableVisual from "@components/product-visuals/LeadTableVisual.astro";
+import { stickyStorySteps } from "@data/workflow";
+---
+
+<section
+  id="story"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="wide">
+    <SectionHeading
+      eyebrow="One connected workflow"
+      title="From search results to a structured prospect list."
+    />
+
+    <div class="mt-14 grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div class="flex flex-col gap-6 lg:gap-10" data-story-steps>
+        {
+          stickyStorySteps.map((step) => (
+            <article
+              data-story-step={step.step}
+              class="story-step flex flex-col gap-2 rounded-[var(--radius-card)] p-6 opacity-60 transition-[opacity,background-color] duration-500"
+            >
+              <span class="text-sm font-semibold text-[var(--color-brand)]">0{step.step}</span>
+              <h3 class="text-xl font-semibold text-[var(--color-text-primary)]">{step.title}</h3>
+              <p class="text-sm text-[var(--color-text-secondary)]">{step.description}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="lg:sticky lg:top-28 lg:h-fit">
+        <LeadTableVisual />
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .story-step.is-active {
+    opacity: 1;
+    background-color: var(--color-surface);
+  }
+</style>
+
+<script>
+  const steps = document.querySelectorAll<HTMLElement>("[data-story-step]");
+  if (steps.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-active", entry.isIntersecting);
+        });
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 },
+    );
+    steps.forEach((step) => observer.observe(step));
+  }
+</script>

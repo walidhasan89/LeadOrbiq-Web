@@ -1,0 +1,117 @@
+---
+import LegalLayout from "@layouts/LegalLayout.astro";
+import { siteConfig } from "@data/site";
+---
+
+<LegalLayout
+  title="Privacy Policy"
+  description="How LeadOrbiq handles information related to the Chrome extension and this website."
+  pathname="/privacy-policy/"
+  lastUpdated="August 1, 2026"
+>
+  <p>
+    This Privacy Policy explains how LeadOrbiq ("we," "us," or "the extension") handles information
+    in connection with the LeadOrbiq Chrome extension and this website. It's written to reflect
+    what's currently confirmed about the product. Sections that depend on implementation details not
+    yet verified are marked <strong>[VERIFY]</strong> and will be finalized before the extension's public
+    launch — see the note at the end of this policy.
+  </p>
+
+  <h2>1. What LeadOrbiq is</h2>
+  <p>
+    LeadOrbiq is a Chrome extension designed to help users collect and organize business lead
+    information while researching prospects, primarily through Google Maps. It is not a standalone
+    web application.
+  </p>
+
+  <h2>2. Information the extension may handle</h2>
+  <p>
+    In the course of helping you collect and organize business information from Google Maps,
+    LeadOrbiq may process publicly visible business listing details (such as business name and
+    category) that you choose to collect during your research. The complete, confirmed list of data
+    fields the extension collects will be published on the <a href="/features/">Features page</a> and
+    kept in sync with this policy.
+  </p>
+  <p>
+    <strong>[VERIFY]</strong> Whether additional fields (such as phone numbers, websites, ratings, or
+    email addresses) are collected, and the exact source of any such data, has not been confirmed for
+    publication yet.
+  </p>
+
+  <h2>3. Account information</h2>
+  <p>
+    <strong>[VERIFY]</strong> Whether creating an account is required to use LeadOrbiq, and what account
+    information (such as an email address) would be collected, has not been confirmed yet.
+  </p>
+
+  <h2>4. How information is stored</h2>
+  <p>
+    <strong>[VERIFY]</strong> Whether collected lead data is stored locally in your browser, synced to
+    a cloud account, or both, has not been confirmed yet. This section will describe the actual storage
+    behavior once verified against the current extension release.
+  </p>
+
+  <h2>5. Data retention</h2>
+  <p>
+    <strong>[VERIFY]</strong> Specific data retention periods have not been confirmed yet.
+  </p>
+
+  <h2>6. Third-party services</h2>
+  <p>
+    <strong>[VERIFY]</strong> Any third-party processors, analytics tools, or payment processors used
+    in connection with LeadOrbiq have not been confirmed for publication yet. We will not claim "we never
+    share data with third parties" or similar blanket statements until that claim can be technically verified.
+  </p>
+
+  <h2>7. Chrome extension permissions</h2>
+  <p>
+    Chrome extensions must declare the permissions they request. Review the permissions listed on
+    the LeadOrbiq Chrome Web Store listing before installing. <strong>[VERIFY]</strong> A plain-language
+    explanation of each requested permission, matched to the current extension release, will be added
+    here once confirmed.
+  </p>
+
+  <h2>8. Your responsibilities</h2>
+  <p>
+    If you use LeadOrbiq to collect information about businesses for outreach purposes, you are
+    responsible for using that information lawfully. This includes following applicable privacy and
+    marketing laws, respecting Google Maps' and any other platform's terms of use, identifying
+    yourself accurately, personalizing your outreach, avoiding spam, and honoring opt-out requests.
+  </p>
+
+  <h2>9. Children's privacy</h2>
+  <p>
+    LeadOrbiq is intended for business and professional use and is not directed at children. We do
+    not knowingly collect personal information from children.
+  </p>
+
+  <h2>10. Data requests</h2>
+  <p>
+    If you have a question about data handled in connection with LeadOrbiq, or want to submit a
+    privacy request, use the <a href="/contact/">Contact page</a> and select "Privacy request" as the
+    topic. We aim to respond promptly. <strong>[VERIFY]</strong> A formal data-deletion request process
+    will be documented here once finalized.
+  </p>
+
+  <h2>11. Changes to this policy</h2>
+  <p>
+    We may update this Privacy Policy as the product and its verified capabilities change. Material
+    changes will be reflected in the "Last updated" date above.
+  </p>
+
+  <h2>12. Contact</h2>
+  <p>
+    Questions about this policy can be sent to <a href={`mailto:${siteConfig.supportEmail}`}
+      >{siteConfig.supportEmail}</a
+    >
+    or through the <a href="/contact/">Contact page</a>.
+  </p>
+
+  <h2>A note on verification</h2>
+  <p>
+    Sections marked <strong>[VERIFY]</strong> reflect real gaps in what's been confirmed about the product's
+    current implementation, not placeholder filler. This policy will be reviewed against actual extension
+    behavior, and by qualified legal counsel, before LeadOrbiq's public launch — see
+    <code>docs/09-VERIFICATION-AND-LAUNCH-CHECKLIST.md</code> in the project repository.
+  </p>
+</LegalLayout>

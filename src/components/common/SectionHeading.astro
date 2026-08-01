@@ -1,0 +1,50 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body?: string;
+  align?: "left" | "center";
+  level?: "h1" | "h2";
+  class?: string;
+}
+
+const { eyebrow, title, body, align = "left", level = "h2", class: className = "" } = Astro.props;
+const Heading = level;
+---
+
+<div
+  class:list={[
+    "flex flex-col gap-4",
+    align === "center" ? "items-center text-center" : "items-start text-left",
+    className,
+  ]}
+>
+  {
+    eyebrow && (
+      <span class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-[var(--color-brand)]">
+        <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+        {eyebrow}
+      </span>
+    )
+  }
+  <Heading
+    class:list={[
+      "balance font-semibold text-[var(--color-text-primary)]",
+      level === "h1" ? "text-h1" : "text-h2",
+    ]}
+  >
+    {title}
+  </Heading>
+  {
+    body && (
+      <p
+        class:list={[
+          "pretty max-w-[65ch] text-body-lg text-[var(--color-text-secondary)]",
+          align === "center" && "mx-auto",
+        ]}
+      >
+        {body}
+      </p>
+    )
+  }
+</div>

@@ -1,0 +1,70 @@
+---
+import type { PricingPlan } from "@data/pricing";
+import Button from "@components/common/Button.astro";
+import { siteConfig } from "@data/site";
+
+interface Props {
+  plan: PricingPlan;
+  class?: string;
+}
+
+const { plan, class: className = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative flex flex-col gap-6 rounded-[var(--radius-panel)] border p-8 transition-[transform,box-shadow] duration-[var(--duration-card)] ease-[var(--ease-orbit)] hover:-translate-y-1",
+    plan.featured
+      ? "border-[var(--color-brand)] bg-[var(--color-surface-strong)] shadow-[var(--shadow-glow)]"
+      : "border-[var(--color-border)] bg-[var(--color-surface)]",
+    className,
+  ]}
+>
+  {
+    plan.featured && (
+      <span class="absolute -top-3 left-8 rounded-full bg-[image:var(--gradient-brand)] px-3 py-1 text-xs font-semibold text-white shadow-[var(--shadow-glow)]">
+        Most popular
+      </span>
+    )
+  }
+  <div class="flex flex-col gap-2">
+    <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">{plan.name}</h3>
+    <p class="text-sm text-[var(--color-text-secondary)]">{plan.description}</p>
+  </div>
+
+  <div class="flex items-baseline gap-2">
+    <span class="text-h3 font-semibold text-[var(--color-text-primary)]">{plan.price}</span>
+    <span class="text-xs font-medium text-[var(--color-warning)]">{plan.billingNote}</span>
+  </div>
+
+  <ul class="flex flex-col gap-3">
+    {
+      plan.features.map((feature) => (
+        <li class="flex items-start gap-2.5 text-sm text-[var(--color-text-secondary)]">
+          <svg
+            aria-hidden="true"
+            class="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-brand)]"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+          </svg>
+          <span>{feature}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <Button
+    href={siteConfig.chromeStoreUrl}
+    external
+    variant={plan.featured ? "primary" : "secondary"}
+    class="mt-auto w-full"
+  >
+    {plan.ctaLabel}
+  </Button>
+</div>

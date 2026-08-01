@@ -1,0 +1,142 @@
+---
+import { primaryNav } from "@data/navigation";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+function isActive(href: string, path: string): boolean {
+  if (href.startsWith("/#")) return false;
+  const clean = href.replace(/\/$/, "") || "/";
+  const current = path.replace(/\/$/, "") || "/";
+  return clean === current;
+}
+---
+
+<nav aria-label="Primary" class="hidden lg:block">
+  <ul class="flex items-center gap-1">
+    {
+      primaryNav.map((item) => {
+        const active = isActive(item.href, currentPath);
+        return (
+          <li class="relative" data-dropdown={item.children ? "" : undefined}>
+            {item.children ? (
+              <>
+                <button
+                  type="button"
+                  class="dropdown-trigger group flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-medium text-[var(--color-text-primary)] transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)] aria-expanded:bg-[var(--color-surface)]"
+                  aria-expanded="false"
+                >
+                  {item.label}
+                  <svg
+                    aria-hidden="true"
+                    class="h-3 w-3 transition-transform duration-[var(--duration-control)] group-aria-expanded:rotate-180"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  >
+                    <path d="M3 4.5 6 7.5 9 4.5" />
+                  </svg>
+                </button>
+                <div class="dropdown-panel invisible absolute left-0 top-full z-40 mt-2 w-72 origin-top-left translate-y-1 rounded-[var(--radius-card)] opacity-0 transition-[opacity,transform,visibility] duration-[var(--duration-control)] ease-[var(--ease-orbit)]">
+                  <div class="glass-panel-strong rounded-[var(--radius-card)] p-2">
+                    <ul class="flex flex-col">
+                      {item.children.map((child) => (
+                        <li>
+                          <a
+                            href={child.href}
+                            class="flex flex-col gap-0.5 rounded-[var(--radius-sm)] px-3.5 py-2.5 transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)]"
+                          >
+                            <span class="text-sm font-semibold text-[var(--color-text-primary)]">
+                              {child.label}
+                            </span>
+                            {child.description && (
+                              <span class="text-xs text-[var(--color-text-secondary)]">
+                                {child.description}
+                              </span>
+                            )}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <a
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                class:list={[
+                  "block rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)]",
+                  active ? "text-[var(--color-brand)]" : "text-[var(--color-text-primary)]",
+                ]}
+              >
+                {item.label}
+              </a>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<style>
+  [data-dropdown]:hover .dropdown-panel,
+  [data-dropdown]:focus-within .dropdown-panel,
+  [data-dropdown] .dropdown-trigger[aria-expanded="true"] ~ .dropdown-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dropdown-panel {
+      transition: opacity 1ms linear;
+    }
+  }
+</style>
+
+<script>
+  const groups = document.querySelectorAll<HTMLElement>("[data-dropdown]");
+
+  groups.forEach((group) => {
+    const trigger = group.querySelector<HTMLButtonElement>(".dropdown-trigger");
+    if (!trigger) return;
+
+    const close = () => trigger.setAttribute("aria-expanded", "false");
+    const open = () => trigger.setAttribute("aria-expanded", "true");
+
+    trigger.addEventListener("click", () => {
+      const isOpen = trigger.getAttribute("aria-expanded") === "true";
+      groups.forEach((g) =>
+        g.querySelector(".dropdown-trigger")?.setAttribute("aria-expanded", "false"),
+      );
+      if (!isOpen) open();
+    });
+
+    group.addEventListener("focusout", (event) => {
+      const next = (event as FocusEvent).relatedTarget as Node | null;
+      if (!next || !group.contains(next)) close();
+    });
+
+    group.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        close();
+        trigger.focus();
+      }
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    groups.forEach((group) => {
+      if (!group.contains(event.target as Node)) {
+        group.querySelector(".dropdown-trigger")?.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+</script>

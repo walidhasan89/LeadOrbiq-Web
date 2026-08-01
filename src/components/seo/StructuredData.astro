@@ -1,0 +1,18 @@
+---
+/**
+ * Renders one or more JSON-LD blocks. Only pass schema objects built from
+ * verified facts — see docs/07-SEO-ACCESSIBILITY-PERFORMANCE-QA.md
+ * ("Do not include: fake ratings, fake reviews, fake pricing...").
+ */
+interface Props {
+  schemas: Record<string, unknown>[];
+}
+
+const { schemas } = Astro.props;
+---
+
+{
+  schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+  ))
+}

@@ -1,0 +1,87 @@
+---
+import MarketingLayout from "@layouts/MarketingLayout.astro";
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import ContactForm from "@components/forms/ContactForm.astro";
+import GlowBackground from "@components/product-visuals/GlowBackground.astro";
+import { siteConfig } from "@data/site";
+
+const reasons = [
+  "Product support",
+  "Billing question",
+  "Feature question",
+  "Partnership",
+  "Privacy request",
+  "General message",
+];
+---
+
+<MarketingLayout
+  title="Contact — LeadOrbiq"
+  description="Reach the LeadOrbiq team for product support, billing questions, partnership inquiries, or privacy requests."
+  pathname="/contact/"
+  breadcrumbs={[{ label: "Contact", href: "/contact/" }]}
+>
+  <section class="relative overflow-hidden pb-12 pt-16 sm:pt-20">
+    <GlowBackground variant="hero" />
+    <Container size="content">
+      <SectionHeading
+        level="h1"
+        align="center"
+        eyebrow="Support"
+        title="Questions about LeadOrbiq?"
+        body="Send your question and choose the topic that best matches what you need. Product and privacy requests should be handled clearly and promptly."
+      />
+    </Container>
+  </section>
+
+  <section class="section-spacing border-t border-[var(--color-border)] pt-10">
+    <Container size="content">
+      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <div class="flex flex-col gap-6">
+          <div
+            class="flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <h2
+              class="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              What we can help with
+            </h2>
+            <ul class="flex flex-col gap-2">
+              {
+                reasons.map((reason) => (
+                  <li class="flex items-center gap-2.5 text-sm text-[var(--color-text-primary)]">
+                    <span
+                      aria-hidden="true"
+                      class="h-1.5 w-1.5 rounded-full bg-[var(--color-brand)]"
+                    />
+                    {reason}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div
+            class="flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6"
+          >
+            <h2
+              class="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+            >
+              Prefer email?
+            </h2>
+            <a
+              href={`mailto:${siteConfig.supportEmail}`}
+              class="text-sm font-medium text-[var(--color-brand)] underline-offset-2 hover:underline"
+            >
+              {siteConfig.supportEmail}
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-panel rounded-[var(--radius-panel)] p-6 sm:p-8">
+          <ContactForm />
+        </div>
+      </div>
+    </Container>
+  </section>
+</MarketingLayout>

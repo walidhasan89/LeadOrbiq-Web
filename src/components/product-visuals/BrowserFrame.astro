@@ -1,0 +1,46 @@
+---
+interface Props {
+  label?: string;
+  class?: string;
+}
+const { label = "Local business search — illustrative interface", class: className = "" } =
+  Astro.props;
+---
+
+<figure
+  class:list={[
+    "glass-panel-strong relative flex flex-col overflow-hidden rounded-[var(--radius-panel)]",
+    className,
+  ]}
+>
+  <div class="flex items-center gap-3 border-b border-[var(--color-border)] px-5 py-3.5">
+    <div class="flex items-center gap-1.5" aria-hidden="true">
+      <span class="h-2.5 w-2.5 rounded-full bg-[var(--color-danger)]/60"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-[var(--color-warning)]/60"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-[var(--color-success)]/60"></span>
+    </div>
+    <div
+      class="flex flex-1 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/60 px-3.5 py-1.5"
+    >
+      <svg
+        aria-hidden="true"
+        class="h-3.5 w-3.5 shrink-0 text-[var(--color-text-secondary)]"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <path
+          d="M8 1.5c-2.2 3-2.2 10 0 13m0-13c2.2 3 2.2 10 0 13M2 8h12M2.8 4.8h10.4M2.8 11.2h10.4"
+          stroke-linecap="round"></path>
+      </svg>
+      <span class="truncate text-xs text-[var(--color-text-secondary)]"
+        >Plumbers near Denver, CO</span
+      >
+    </div>
+  </div>
+  <div class="relative flex-1">
+    <slot />
+  </div>
+  <figcaption class="sr-only">{label}</figcaption>
+</figure>

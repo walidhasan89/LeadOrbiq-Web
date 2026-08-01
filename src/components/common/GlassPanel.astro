@@ -1,0 +1,21 @@
+---
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  strong?: boolean;
+  class?: string;
+  glow?: boolean;
+}
+
+const { as: Tag = "div", strong = false, class: className = "", glow = false } = Astro.props;
+---
+
+<Tag
+  class:list={[
+    strong ? "glass-panel-strong" : "glass-panel",
+    "rounded-[var(--radius-panel)]",
+    glow && "shadow-[var(--shadow-glow)]",
+    className,
+  ]}
+>
+  <slot />
+</Tag>

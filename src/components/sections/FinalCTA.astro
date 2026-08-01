@@ -1,0 +1,30 @@
+---
+import Container from "@components/common/Container.astro";
+import Button from "@components/common/Button.astro";
+import GlowBackground from "@components/product-visuals/GlowBackground.astro";
+import { siteConfig } from "@data/site";
+---
+
+<section
+  id="cta"
+  data-rail-section
+  class="section-spacing relative overflow-hidden border-t border-[var(--color-border)]"
+>
+  <GlowBackground variant="section" />
+  <Container size="content">
+    <div class="flex flex-col items-center gap-6 text-center">
+      <h2 class="balance text-h2 font-semibold text-[var(--color-text-primary)]">
+        Spend less time copying. Start building better prospect lists.
+      </h2>
+      <p class="pretty max-w-xl text-body-lg text-[var(--color-text-secondary)]">
+        Turn Google Maps research into a clearer, more organized lead-generation workflow with
+        LeadOrbiq.
+      </p>
+      <div class="flex flex-col items-center gap-4 sm:flex-row">
+        <Button href={siteConfig.chromeStoreUrl} external size="lg">Add to Chrome</Button>
+        <Button href="/features/" variant="secondary" size="lg">Explore Features</Button>
+      </div>
+      <Button href="/privacy-policy/" variant="text">Read Privacy Policy</Button>
+    </div>
+  </Container>
+</section>

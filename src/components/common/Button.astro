@@ -1,0 +1,74 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "text";
+  size?: "md" | "lg";
+  type?: "button" | "submit" | "reset";
+  class?: string;
+  external?: boolean;
+  disabled?: boolean;
+  id?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  type = "button",
+  class: className = "",
+  external = false,
+  disabled = false,
+  id,
+  ariaLabel,
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-button)] font-semibold transition-[transform,box-shadow,background-color,color,border-color] duration-[var(--duration-control)] ease-[var(--ease-orbit)] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
+
+const sizes = {
+  md: "min-h-11 px-5 text-[0.95rem]",
+  lg: "min-h-13 px-7 text-base",
+};
+
+const variants = {
+  primary:
+    "bg-[image:var(--gradient-brand)] text-white shadow-[var(--shadow-glow)] hover:-translate-y-0.5 hover:shadow-[0_28px_70px_-24px_rgba(77,124,255,0.55)] active:translate-y-0",
+  secondary:
+    "glass-panel !rounded-[var(--radius-button)] text-[var(--color-text-primary)] border border-[var(--color-border-strong)] hover:-translate-y-0.5 hover:border-[var(--color-brand)] active:translate-y-0",
+  text: "text-[var(--color-brand)] underline-offset-4 hover:underline px-0 min-h-0",
+};
+
+const classes = [base, sizes[size], variants[variant], className].join(" ");
+const Tag = href ? "a" : "button";
+const relProps = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  disabled={!href ? disabled : undefined}
+  aria-disabled={href && disabled ? "true" : undefined}
+  aria-label={ariaLabel}
+  id={id}
+  class={classes}
+  {...relProps}
+>
+  <slot />
+  {
+    external && (
+      <svg
+        aria-hidden="true"
+        class="h-3.5 w-3.5 shrink-0"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M6.5 3.5h6v6M12.5 3.5 3.5 12.5" />
+      </svg>
+    )
+  }
+</Tag>

@@ -1,0 +1,79 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import ComparisonVisual from "@components/product-visuals/ComparisonVisual.astro";
+import { comparisonManual, comparisonLeadOrbiq } from "@data/workflow";
+---
+
+<section
+  id="comparison"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="wide">
+    <SectionHeading
+      eyebrow="Manual research vs. a guided workflow"
+      title="A cleaner way to prepare prospect lists."
+    />
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-3">
+          <span
+            class="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+          >
+            Manual research
+          </span>
+          <ul class="flex flex-col gap-2.5">
+            {
+              comparisonManual.map((point) => (
+                <li class="flex items-start gap-2.5 text-sm text-[var(--color-text-secondary)]">
+                  <svg
+                    aria-hidden="true"
+                    class="mt-0.5 h-4 w-4 shrink-0"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  >
+                    <path d="M4 4l8 8m0-8-8 8" />
+                  </svg>
+                  {point}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="flex flex-col gap-3">
+          <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]"
+            >LeadOrbiq</span
+          >
+          <ul class="flex flex-col gap-2.5">
+            {
+              comparisonLeadOrbiq.map((point) => (
+                <li class="flex items-start gap-2.5 text-sm font-medium text-[var(--color-text-primary)]">
+                  <svg
+                    aria-hidden="true"
+                    class="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-brand)]"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+                  </svg>
+                  {point}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <ComparisonVisual />
+    </div>
+  </Container>
+</section>

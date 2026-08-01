@@ -1,0 +1,142 @@
+---
+import MarketingLayout from "@layouts/MarketingLayout.astro";
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import GlowBackground from "@components/product-visuals/GlowBackground.astro";
+import { getCollection } from "astro:content";
+import { helpCategories } from "@/content.config";
+
+const allArticles = await getCollection("help");
+const sorted = allArticles.sort((a, b) => a.data.order - b.data.order);
+
+const grouped = helpCategories
+  .map((category) => ({
+    category,
+    articles: sorted.filter((article) => article.data.category === category),
+  }))
+  .filter((group) => group.articles.length > 0);
+---
+
+<MarketingLayout
+  title="Help Center — LeadOrbiq"
+  description="Installation, Google Maps workflow, lead collection, exporting, privacy, and troubleshooting guides for LeadOrbiq."
+  pathname="/help/"
+  breadcrumbs={[{ label: "Help Center", href: "/help/" }]}
+>
+  <section class="relative overflow-hidden pb-12 pt-16 sm:pt-20">
+    <GlowBackground variant="hero" />
+    <Container size="content">
+      <SectionHeading
+        level="h1"
+        align="center"
+        eyebrow="Support"
+        title="How can we help with LeadOrbiq?"
+      />
+      <div class="mx-auto mt-8 max-w-lg">
+        <label for="help-search" class="sr-only">Search help articles</label>
+        <div class="relative">
+          <svg
+            aria-hidden="true"
+            class="pointer-events-none absolute left-4 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-[var(--color-text-secondary)]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+          >
+            <path d="M11 4.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm9.5 15.5-5-5"></path>
+          </svg>
+          <input
+            type="search"
+            id="help-search"
+            placeholder="Search installation, lead collection, exporting, privacy, and troubleshooting"
+            class="w-full rounded-[var(--radius-pill)] border border-[var(--color-border)] bg-[var(--color-surface)] py-3.5 pl-11 pr-4 text-sm text-[var(--color-text-primary)] outline-none transition-colors focus-visible:border-[var(--color-brand)]"
+          />
+        </div>
+        <p
+          id="help-search-status"
+          class="mt-2 text-center text-xs text-[var(--color-text-secondary)]"
+          role="status"
+          aria-live="polite"
+        >
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-spacing border-t border-[var(--color-border)] pt-10">
+    <Container size="wide">
+      <div id="help-groups" class="flex flex-col gap-14">
+        {
+          grouped.map((group) => (
+            <div data-help-group>
+              <h2 class="text-lg font-semibold text-[var(--color-text-primary)]">
+                {group.category}
+              </h2>
+              <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {group.articles.map((article) => (
+                  <a
+                    href={`/help/${article.id}/`}
+                    data-help-card
+                    data-search-text={`${article.data.title} ${article.data.description}`.toLowerCase()}
+                    class="flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-[transform,border-color] duration-[var(--duration-control)] hover:-translate-y-0.5 hover:border-[var(--color-brand)]/50"
+                  >
+                    <span class="text-sm font-semibold text-[var(--color-text-primary)]">
+                      {article.data.title}
+                    </span>
+                    <span class="text-sm text-[var(--color-text-secondary)]">
+                      {article.data.description}
+                    </span>
+                    {!article.data.verified && (
+                      <span class="mt-1 w-fit rounded-full bg-[var(--color-warning)]/12 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--color-warning)]">
+                        Verification pending
+                      </span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <p
+        id="help-empty-state"
+        class="hidden py-16 text-center text-sm text-[var(--color-text-secondary)]"
+      >
+        No help articles match your search.
+      </p>
+    </Container>
+  </section>
+</MarketingLayout>
+
+<script>
+  const input = document.getElementById("help-search") as HTMLInputElement | null;
+  const status = document.getElementById("help-search-status");
+  const emptyState = document.getElementById("help-empty-state");
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-help-card]"));
+  const groups = Array.from(document.querySelectorAll<HTMLElement>("[data-help-group]"));
+
+  if (input) {
+    input.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const matches = query === "" || (card.dataset.searchText ?? "").includes(query);
+        card.classList.toggle("hidden", !matches);
+        if (matches) visibleCount += 1;
+      });
+
+      groups.forEach((group) => {
+        const hasVisibleCard = group.querySelectorAll("[data-help-card]:not(.hidden)").length > 0;
+        group.classList.toggle("hidden", !hasVisibleCard);
+      });
+
+      if (emptyState) emptyState.classList.toggle("hidden", visibleCount !== 0);
+      if (status) {
+        status.textContent =
+          query === "" ? "" : `${visibleCount} article${visibleCount === 1 ? "" : "s"} found`;
+      }
+    });
+  }
+</script>

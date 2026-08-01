@@ -1,0 +1,45 @@
+---
+import type { FAQItem } from "@data/faq";
+
+interface Props {
+  items: FAQItem[];
+  class?: string;
+  idPrefix?: string;
+}
+
+const { items, class: className = "", idPrefix = "faq" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "flex flex-col divide-y divide-[var(--color-border)] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)]",
+    className,
+  ]}
+>
+  {
+    items.map((item, index) => {
+      const id = `${idPrefix}-${index}`;
+      return (
+        <details id={id} class="group px-6 py-1 first:pt-1 last:pb-1 open:pb-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-base font-medium text-[var(--color-text-primary)] marker:content-none focus-visible:outline-none">
+            <span>{item.question}</span>
+            <svg
+              aria-hidden="true"
+              class="h-4 w-4 shrink-0 text-[var(--color-text-secondary)] transition-transform duration-[var(--duration-control)] group-open:rotate-45"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+            >
+              <path d="M8 3v10M3 8h10" />
+            </svg>
+          </summary>
+          <p class="pretty max-w-[65ch] text-sm text-[var(--color-text-secondary)]">
+            {item.answer}
+          </p>
+        </details>
+      );
+    })
+  }
+</div>

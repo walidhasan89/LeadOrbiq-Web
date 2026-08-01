@@ -1,0 +1,19 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import FAQAccordion from "@components/common/FAQAccordion.astro";
+import { homepageFaq } from "@data/faq";
+---
+
+<section
+  id="faq"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="content">
+    <SectionHeading align="center" eyebrow="Common questions" title="Frequently asked questions" />
+    <div class="mt-12">
+      <FAQAccordion items={homepageFaq} idPrefix="home-faq" />
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,43 @@
+---
+import { breadcrumbSchema, type BreadcrumbEntry } from "@utils/seo";
+import StructuredData from "@components/seo/StructuredData.astro";
+
+interface Props {
+  items: BreadcrumbEntry[];
+}
+
+const { items } = Astro.props;
+const withHome: BreadcrumbEntry[] = [{ label: "Home", href: "/" }, ...items];
+---
+
+<nav aria-label="Breadcrumb" class="container-main pt-6">
+  <ol class="flex flex-wrap items-center gap-1.5 text-sm text-[var(--color-text-secondary)]">
+    {
+      withHome.map((item, index) => {
+        const isLast = index === withHome.length - 1;
+        return (
+          <li class="flex items-center gap-1.5">
+            {index > 0 && (
+              <span aria-hidden="true" class="text-[var(--color-border-strong)]">
+                /
+              </span>
+            )}
+            {isLast ? (
+              <span aria-current="page" class="font-medium text-[var(--color-text-primary)]">
+                {item.label}
+              </span>
+            ) : (
+              <a
+                href={item.href}
+                class="rounded-sm transition-colors hover:text-[var(--color-brand)]"
+              >
+                {item.label}
+              </a>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+<StructuredData schemas={[breadcrumbSchema(withHome)]} />

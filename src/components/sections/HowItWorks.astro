@@ -1,0 +1,86 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import WorkflowVisual from "@components/product-visuals/WorkflowVisual.astro";
+import ExtensionPanelVisual from "@components/product-visuals/ExtensionPanelVisual.astro";
+import MapLeadVisual from "@components/product-visuals/MapLeadVisual.astro";
+import LeadTableVisual from "@components/product-visuals/LeadTableVisual.astro";
+import ExportFlowVisual from "@components/product-visuals/ExportFlowVisual.astro";
+import { howItWorksSteps } from "@data/workflow";
+---
+
+<section
+  id="how-it-works"
+  data-rail-section
+  class="section-spacing relative border-t border-[var(--color-border)]"
+>
+  <Container size="wide">
+    <SectionHeading
+      eyebrow="From search to structured leads"
+      title="Build your list in four clear steps."
+    />
+
+    <div class="mt-12">
+      <WorkflowVisual activeStep={1} class="mb-10 [&_>*]:max-w-none" />
+    </div>
+
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div class="flex flex-col gap-3" id="how-it-works-steps">
+        {
+          howItWorksSteps.map((step) => (
+            <button
+              type="button"
+              data-step={step.step}
+              class="how-step group flex flex-col gap-1.5 rounded-[var(--radius-card)] border border-transparent p-5 text-left transition-[background-color,border-color] duration-[var(--duration-control)] aria-selected:border-[var(--color-brand)]/35 aria-selected:bg-[var(--color-surface)]"
+              aria-selected={step.step === 1 ? "true" : "false"}
+            >
+              <span class="flex items-center gap-3 text-sm font-semibold text-[var(--color-brand)]">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-brand)]/12 text-xs">
+                  {step.step}
+                </span>
+                Step {step.step}
+              </span>
+              <span class="text-lg font-semibold text-[var(--color-text-primary)]">
+                {step.title}
+              </span>
+              <span class="text-sm text-[var(--color-text-secondary)]">{step.description}</span>
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="relative lg:sticky lg:top-28">
+        <div class="how-step-panel" data-panel="1">
+          <MapLeadVisual compact={false} class="min-h-[20rem]" />
+        </div>
+        <div class="how-step-panel hidden" data-panel="2">
+          <MapLeadVisual compact={false} class="min-h-[20rem]" />
+        </div>
+        <div class="how-step-panel hidden" data-panel="3">
+          <div class="flex flex-col gap-4">
+            <ExtensionPanelVisual />
+            <LeadTableVisual />
+          </div>
+        </div>
+        <div class="how-step-panel hidden" data-panel="4">
+          <ExportFlowVisual />
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("#how-it-works-steps .how-step");
+  const panels = document.querySelectorAll<HTMLElement>(".how-step-panel");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const step = btn.dataset.step;
+      buttons.forEach((b) => b.setAttribute("aria-selected", b === btn ? "true" : "false"));
+      panels.forEach((panel) => {
+        panel.classList.toggle("hidden", panel.dataset.panel !== step);
+      });
+    });
+  });
+</script>

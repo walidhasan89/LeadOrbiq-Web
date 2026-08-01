@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from "astro:content";
+import MarketingLayout from "@layouts/MarketingLayout.astro";
+import Container from "@components/common/Container.astro";
+import Button from "@components/common/Button.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("help");
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const dateLabel = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}).format(article.data.updatedDate);
+---
+
+<MarketingLayout
+  title={`${article.data.title} — Help Center`}
+  description={article.data.description}
+  pathname={`/help/${article.id}/`}
+  breadcrumbs={[
+    { label: "Help Center", href: "/help/" },
+    { label: article.data.title, href: `/help/${article.id}/` },
+  ]}
+>
+  <article class="section-spacing">
+    <Container size="narrow">
+      <header class="mb-8 flex flex-col gap-3 border-b border-[var(--color-border)] pb-8">
+        <span class="text-sm font-semibold text-[var(--color-brand)]">{article.data.category}</span>
+        <h1 class="text-h1 font-semibold text-[var(--color-text-primary)]">{article.data.title}</h1>
+        <p class="text-sm text-[var(--color-text-secondary)]">Last updated {dateLabel}</p>
+        {
+          !article.data.verified && (
+            <p class="w-fit rounded-full bg-[var(--color-warning)]/12 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--color-warning)]">
+              Verification pending
+            </p>
+          )
+        }
+      </header>
+      <div class="help-article-prose flex flex-col gap-5 text-[var(--color-text-secondary)]">
+        <Content />
+      </div>
+      <div
+        class="mt-12 flex flex-col gap-4 border-t border-[var(--color-border)] pt-8 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <Button href="/help/" variant="text">← Back to Help Center</Button>
+        <Button href="/contact/" variant="secondary">Still need help? Contact us</Button>
+      </div>
+    </Container>
+  </article>
+</MarketingLayout>
+
+<style>
+  .help-article-prose :global(h2) {
+    margin-top: 1rem;
+    font-size: var(--text-h4);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+  .help-article-prose :global(p) {
+    max-width: 72ch;
+  }
+  .help-article-prose :global(ul),
+  .help-article-prose :global(ol) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+  }
+  .help-article-prose :global(ul) {
+    list-style: disc;
+  }
+  .help-article-prose :global(ol) {
+    list-style: decimal;
+  }
+  .help-article-prose :global(a) {
+    color: var(--color-brand);
+    text-underline-offset: 3px;
+  }
+  .help-article-prose :global(a:hover) {
+    text-decoration: underline;
+  }
+  .help-article-prose :global(strong) {
+    color: var(--color-text-primary);
+  }
+</style>

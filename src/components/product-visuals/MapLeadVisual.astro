@@ -1,0 +1,147 @@
+---
+interface Props {
+  class?: string;
+  compact?: boolean;
+}
+const { class: className = "", compact = false } = Astro.props;
+const patternId = `map-dots-${crypto.randomUUID().slice(0, 8)}`;
+
+/**
+ * Pins are stacked in distinct vertical bands (not side by side) since this
+ * visual renders as narrow as ~280px in the hero's two-column layout — two
+ * labeled chips at the same height will collide at that width.
+ */
+const pins = [
+  {
+    name: "Northline Plumbing",
+    category: "Plumber",
+    rating: "4.8",
+    top: "5%",
+    left: "8%",
+    selected: true,
+  },
+  {
+    name: "Greenway Drainage",
+    category: "Drainage",
+    rating: "4.5",
+    top: "39%",
+    left: "34%",
+    selected: true,
+  },
+  {
+    name: "ClearFlow Septic",
+    category: "Septic service",
+    rating: "4.6",
+    top: "73%",
+    left: "10%",
+    selected: true,
+  },
+] as const;
+---
+
+<div
+  class:list={[
+    "relative isolate min-h-[22rem] w-full overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-bg-soft)]",
+    className,
+  ]}
+  role="img"
+  aria-label="Illustrative map of local plumbing and drainage businesses near Denver, with several results selected for collection"
+>
+  <svg class="absolute inset-0 h-full w-full opacity-70" aria-hidden="true">
+    <defs>
+      <pattern id={patternId} width="22" height="22" patternUnits="userSpaceOnUse">
+        <circle cx="1.2" cy="1.2" r="1.2" fill="var(--color-border-strong)"></circle>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill={`url(#${patternId})`}></rect>
+  </svg>
+
+  <div
+    aria-hidden="true"
+    class="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[var(--color-brand)]/35"
+  >
+  </div>
+
+  {
+    pins.map((pin, index) => (
+      <div
+        class="absolute flex max-w-[8.5rem] flex-col items-start gap-1.5 text-left"
+        style={`top:${pin.top}; left:${pin.left}; animation-delay:${index * 120}ms;`}
+      >
+        <span
+          class:list={[
+            "map-pin flex h-7 w-7 items-center justify-center rounded-full border shadow-[var(--shadow-ambient)]",
+            pin.selected
+              ? "border-transparent bg-[image:var(--gradient-brand)] text-white"
+              : "border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] text-[var(--color-text-secondary)]",
+          ]}
+          aria-hidden="true"
+        >
+          <svg
+            viewBox="0 0 16 16"
+            class="h-3.5 w-3.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+          >
+            <path d="M8 1.5a4.5 4.5 0 0 1 4.5 4.5c0 3.2-4.5 8.5-4.5 8.5S3.5 9.2 3.5 6A4.5 4.5 0 0 1 8 1.5Z" />
+            <circle cx="8" cy="6" r="1.4" />
+          </svg>
+        </span>
+        {!compact && (
+          <span
+            class:list={[
+              "map-chip pointer-events-none w-max max-w-[9rem] rounded-[var(--radius-sm)] border px-2.5 py-1.5 text-[0.7rem] shadow-[var(--shadow-ambient)]",
+              pin.selected
+                ? "border-[var(--color-brand)]/40 bg-[var(--color-surface-strong)]"
+                : "border-[var(--color-border)] bg-[var(--color-surface)]",
+            ]}
+          >
+            <span class="block font-semibold text-[var(--color-text-primary)]">{pin.name}</span>
+            <span class="text-[var(--color-text-secondary)]">
+              {pin.category} · {pin.rating}★
+            </span>
+          </span>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .map-pin {
+    animation: pin-drop 700ms var(--ease-orbit) backwards;
+  }
+  .map-chip {
+    animation: chip-in 700ms var(--ease-orbit) backwards;
+    animation-delay: 120ms;
+  }
+
+  @keyframes pin-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes chip-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-pin,
+    .map-chip {
+      animation: none;
+    }
+  }
+</style>

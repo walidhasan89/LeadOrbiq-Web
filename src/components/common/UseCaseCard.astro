@@ -1,0 +1,36 @@
+---
+import type { UseCase } from "@data/use-cases";
+
+interface Props {
+  useCase: UseCase;
+  class?: string;
+}
+
+const { useCase, class: className = "" } = Astro.props;
+---
+
+<article
+  id={useCase.slug}
+  class:list={[
+    "flex flex-col gap-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6",
+    className,
+  ]}
+>
+  <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">{useCase.audience}</h3>
+  <p class="text-sm text-[var(--color-text-secondary)]">{useCase.summary}</p>
+  <ol class="mt-auto flex flex-col gap-2.5 border-t border-[var(--color-border)] pt-4">
+    {
+      useCase.workflow.map((step, index) => (
+        <li class="flex items-start gap-3 text-sm text-[var(--color-text-secondary)]">
+          <span
+            aria-hidden="true"
+            class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand)]/15 text-[0.68rem] font-semibold text-[var(--color-brand)]"
+          >
+            {index + 1}
+          </span>
+          <span>{step}</span>
+        </li>
+      ))
+    }
+  </ol>
+</article>

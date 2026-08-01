@@ -1,0 +1,70 @@
+---
+import MarketingLayout from "@layouts/MarketingLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import OutcomeRail from "@components/sections/OutcomeRail.astro";
+import ProblemSection from "@components/sections/ProblemSection.astro";
+import HowItWorks from "@components/sections/HowItWorks.astro";
+import FeatureBento from "@components/sections/FeatureBento.astro";
+import StickyStory from "@components/sections/StickyStory.astro";
+import UseCasesSection from "@components/sections/UseCasesSection.astro";
+import DataOrganization from "@components/sections/DataOrganization.astro";
+import ComparisonSection from "@components/sections/ComparisonSection.astro";
+import TrustPrivacy from "@components/sections/TrustPrivacy.astro";
+import PricingTeaser from "@components/sections/PricingTeaser.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import FinalCTA from "@components/sections/FinalCTA.astro";
+import { siteConfig } from "@data/site";
+import { homepageFaq } from "@data/faq";
+import { faqSchema } from "@utils/seo";
+
+const softwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: siteConfig.name,
+  applicationCategory: "BrowserApplication",
+  operatingSystem: "Chrome",
+  description:
+    "LeadOrbiq is a Chrome extension designed to help users collect and organize business lead information during local-market research on Google Maps.",
+  url: siteConfig.url,
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: new URL("/favicon.svg", siteConfig.url).toString(),
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  url: siteConfig.url,
+};
+
+const homepageFaqSchema = faqSchema(homepageFaq);
+---
+
+<MarketingLayout
+  title="LeadOrbiq — Google Maps Lead Collection Chrome Extension"
+  description="Collect and organize local-business lead information from Google Maps with LeadOrbiq, a Chrome extension built for faster, cleaner prospecting workflows."
+  pathname="/"
+  showSectionRail={true}
+  showTrustStrip={true}
+  schemas={[softwareApplicationSchema, organizationSchema, websiteSchema, homepageFaqSchema]}
+>
+  <Hero />
+  <OutcomeRail />
+  <ProblemSection />
+  <HowItWorks />
+  <FeatureBento />
+  <StickyStory />
+  <UseCasesSection />
+  <DataOrganization />
+  <ComparisonSection />
+  <TrustPrivacy />
+  <PricingTeaser />
+  <FAQSection />
+  <FinalCTA />
+</MarketingLayout>

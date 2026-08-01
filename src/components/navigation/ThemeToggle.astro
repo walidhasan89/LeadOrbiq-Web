@@ -1,0 +1,99 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={[
+    "theme-toggle-btn relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] transition-[transform,box-shadow] duration-[var(--duration-control)] ease-[var(--ease-orbit)] hover:shadow-[var(--shadow-glow)] active:scale-95",
+    className,
+  ]}
+  aria-label="Switch color theme, currently dark"
+  data-theme-toggle
+>
+  <svg
+    class="theme-icon-sun h-[18px] w-[18px]"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4.2"></circle>
+    <path
+      d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"
+    ></path>
+  </svg>
+  <svg
+    class="theme-icon-moon h-[18px] w-[18px]"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-icon-sun,
+  .theme-icon-moon {
+    position: absolute;
+    transition:
+      opacity var(--duration-control) var(--ease-orbit),
+      transform var(--duration-control) var(--ease-orbit);
+  }
+
+  :global([data-theme="dark"]) .theme-icon-sun {
+    opacity: 0;
+    transform: rotate(-40deg) scale(0.6);
+  }
+  :global([data-theme="dark"]) .theme-icon-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  .theme-icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  .theme-icon-moon {
+    opacity: 0;
+    transform: rotate(40deg) scale(0.6);
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = "leadorbiq-theme";
+
+  function applyTheme(theme: "light" | "dark") {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn) => {
+      btn.setAttribute("aria-label", `Switch color theme, currently ${theme}`);
+    });
+  }
+
+  function currentTheme(): "light" | "dark" {
+    return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = currentTheme() === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try {
+        localStorage.setItem(STORAGE_KEY, next);
+      } catch {
+        /* storage unavailable */
+      }
+    });
+  });
+
+  applyTheme(currentTheme());
+</script>

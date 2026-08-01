@@ -1,0 +1,70 @@
+---
+import Container from "@components/common/Container.astro";
+import LogoMark from "@components/common/LogoMark.astro";
+import Button from "@components/common/Button.astro";
+import ThemeToggle from "@components/navigation/ThemeToggle.astro";
+import DesktopNavigation from "@components/navigation/DesktopNavigation.astro";
+import MobileNavigation from "@components/navigation/MobileNavigation.astro";
+import { siteConfig } from "@data/site";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" class="sticky top-0 z-50" style={`--nav-h: var(--nav-height)`}>
+  <Container size="wide" class="pt-3">
+    <div
+      id="site-header-inner"
+      class="flex h-[var(--nav-height)] items-center justify-between rounded-[var(--radius-panel)] px-3 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-[var(--duration-control)] ease-[var(--ease-orbit)] sm:px-4"
+    >
+      <a
+        href="/"
+        class="flex items-center rounded-[var(--radius-sm)] py-1.5 pl-1.5 pr-2 transition-opacity hover:opacity-80"
+        aria-label="LeadOrbiq home"
+      >
+        <LogoMark variant="full" size={30} />
+      </a>
+
+      <DesktopNavigation currentPath={currentPath} />
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden sm:block">
+          <ThemeToggle />
+        </div>
+        <div class="hidden lg:block">
+          <Button href={siteConfig.chromeStoreUrl} external size="md"> Add to Chrome </Button>
+        </div>
+        <MobileNavigation currentPath={currentPath} />
+      </div>
+    </div>
+  </Container>
+</header>
+
+<style>
+  #site-header-inner {
+    background-color: transparent;
+    border: 1px solid transparent;
+  }
+
+  #site-header.is-scrolled #site-header-inner {
+    background-color: var(--color-surface-strong);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-elevation);
+  }
+</style>
+
+<script>
+  const header = document.getElementById("site-header");
+  const sentinel = document.getElementById("scroll-sentinel");
+
+  if (header && sentinel) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        header.classList.toggle("is-scrolled", !entry.isIntersecting);
+      },
+      { rootMargin: "-1px 0px 0px 0px", threshold: 0 },
+    );
+    observer.observe(sentinel);
+  }
+</script>

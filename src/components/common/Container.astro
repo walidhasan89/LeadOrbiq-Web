@@ -1,0 +1,21 @@
+---
+interface Props {
+  size?: "narrow" | "content" | "main" | "wide";
+  class?: string;
+  as?: keyof HTMLElementTagNameMap;
+}
+
+const { size = "main", class: className = "", as: Tag = "div" } = Astro.props;
+
+const sizeClass: Record<NonNullable<Props["size"]>, string> = {
+  narrow: "container-narrow",
+  content: "container-content",
+  main: "container-main",
+  wide: "container-wide",
+};
+const resolvedSizeClass = sizeClass[size];
+---
+
+<Tag class:list={[resolvedSizeClass, className]}>
+  <slot />
+</Tag>

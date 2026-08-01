@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  verified?: boolean;
+  class?: string;
+  icon?: "map" | "grid" | "clock" | "review" | "layers" | "export" | "duplicate" | "search";
+}
+
+const { title, description, verified = true, class: className = "", icon = "grid" } = Astro.props;
+
+const paths: Record<NonNullable<Props["icon"]>, string> = {
+  map: "M4 6.5 9.5 4l5 2.5L20 4v13.5l-5.5 2.5-5-2.5L4 20Z M9.5 4v13.5 M14.5 6.5V20",
+  grid: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
+  clock: "M12 7v5l3.2 2M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z",
+  review: "M5 12.5 9.5 17 19 6.5",
+  layers: "m12 3 8 4.5-8 4.5-8-4.5Zm-8 9 8 4.5 8-4.5M4 16.5l8 4.5 8-4.5",
+  export: "M12 4v11m0-11 4 4m-4-4-4 4M5 16v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2",
+  duplicate: "M8 8h10v10H8zM6 6v10h2V6h8V4H6z",
+  search: "M11 4.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm9.5 15.5-5-5",
+};
+---
+
+<div
+  class:list={[
+    "group relative flex flex-col gap-4 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-[transform,box-shadow,border-color] duration-[var(--duration-card)] ease-[var(--ease-orbit)] hover:-translate-y-1 hover:border-[var(--color-brand)]/50 hover:shadow-[var(--shadow-glow)]",
+    className,
+  ]}
+>
+  <div class="flex items-start justify-between gap-3">
+    <span
+      aria-hidden="true"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--gradient-brand)] text-white shadow-[var(--shadow-glow)]"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d={paths[icon]}></path>
+      </svg>
+    </span>
+    {
+      !verified && (
+        <span class="rounded-full border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--color-warning)]">
+          In development
+        </span>
+      )
+    }
+  </div>
+  <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">{title}</h3>
+  <p class="text-sm text-[var(--color-text-secondary)]">{description}</p>
+</div>

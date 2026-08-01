@@ -1,0 +1,45 @@
+---
+import Container from "@components/common/Container.astro";
+import { outcomeRail } from "@data/workflow";
+
+const icons = [
+  "M11 4.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm9.5 15.5-5-5",
+  "m12 3 8 4.5-8 4.5-8-4.5Zm-8 9 8 4.5 8-4.5",
+  "M4 6.5h16M4 12h10M4 17.5h6",
+  "M4 6.5 12 12l8-5.5M4 6.5v11h16v-11",
+];
+---
+
+<section
+  id="outcomes"
+  data-rail-section
+  class="relative border-y border-[var(--color-border)] bg-[var(--color-bg-soft)] py-10"
+>
+  <Container size="wide">
+    <ul class="grid grid-cols-2 gap-6 sm:grid-cols-4">
+      {
+        outcomeRail.map((outcome, index) => (
+          <li class="flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand)]/12 text-[var(--color-brand)]"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                class="h-4.5 w-4.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d={icons[index % icons.length]} />
+              </svg>
+            </span>
+            <span class="text-sm font-medium text-[var(--color-text-primary)]">{outcome}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</section>

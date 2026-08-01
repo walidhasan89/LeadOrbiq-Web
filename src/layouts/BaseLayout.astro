@@ -1,0 +1,46 @@
+---
+import "@/styles/global.css";
+import SEOHead from "@components/seo/SEOHead.astro";
+import type { SEOProps } from "@/types";
+
+interface Props extends SEOProps {}
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-pt-24">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#050816" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FF" media="(prefers-color-scheme: light)" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <SEOHead {...props} />
+
+    <script is:inline>
+      (function () {
+        try {
+          var STORAGE_KEY = "leadorbiq-theme";
+          var stored = localStorage.getItem(STORAGE_KEY);
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var resolved =
+            stored === "light" || stored === "dark" ? stored : systemDark ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", resolved);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="relative">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,59 @@
+---
+import Container from "@components/common/Container.astro";
+import SectionHeading from "@components/common/SectionHeading.astro";
+import { manualWorkflow, leadOrbiqWorkflow } from "@data/workflow";
+---
+
+<section id="problem" data-rail-section class="section-spacing relative">
+  <Container size="wide">
+    <SectionHeading
+      eyebrow="A better prospecting workflow"
+      title="Prospecting should not feel like manual data entry."
+      body="Finding the right businesses is only the beginning. The slow part is opening listings, copying details, switching tabs, fixing spreadsheet rows, and repeating the process for every prospect. LeadOrbiq gives that research a clearer workflow, helping you move from local search results to an organized list with fewer repetitive steps."
+    />
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-2">
+      <div
+        class="flex flex-col gap-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-7"
+      >
+        <span
+          class="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+        >
+          Manual workflow
+        </span>
+        <ol class="flex flex-col gap-3">
+          {
+            manualWorkflow.map((step, index) => (
+              <li class="flex items-center gap-3 text-sm text-[var(--color-text-secondary)]">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-border-strong)] text-xs font-semibold">
+                  {index + 1}
+                </span>
+                {step}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div
+        class="flex flex-col gap-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/30 bg-[var(--color-surface-strong)] p-7 shadow-[var(--shadow-glow)]"
+      >
+        <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]">
+          LeadOrbiq workflow
+        </span>
+        <ol class="flex flex-col gap-3">
+          {
+            leadOrbiqWorkflow.map((step, index) => (
+              <li class="flex items-center gap-3 text-sm font-medium text-[var(--color-text-primary)]">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-brand)] text-xs font-semibold text-white">
+                  {index + 1}
+                </span>
+                {step}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </Container>
+</section>
