@@ -1,22 +1,32 @@
 ---
 title: "Exporting your list"
-description: "What's currently confirmed about getting your organized lead list out of LeadOrbiq."
+description: "How to get your organized lead list out of LeadOrbiq and into your outreach workflow."
 category: "Exporting"
 order: 1
-updatedDate: 2026-06-01
-verified: false
+updatedDate: 2026-08-02
+verified: true
 ---
 
-Export formats and limits for LeadOrbiq have not been confirmed yet.
+Once your list is organized, LeadOrbiq exports it to CSV or Excel so you can move straight into outreach or your CRM.
 
-## What we can't confirm yet
+## Export formats
 
-This article intentionally does not list specific export formats (like CSV, XLSX, or Google Sheets), integrations, or limits, because none of those have been verified against the current extension release. Publishing a specific claim here without verification would risk misleading you about what the extension actually does.
+LeadOrbiq supports exporting your collected leads as:
 
-## What is confirmed
+- **CSV** — a plain, spreadsheet-friendly format that imports cleanly into almost any CRM, mail-merge tool, or spreadsheet app.
+- **Excel** — a ready-to-open workbook if you're working in Excel or Google Sheets.
 
-LeadOrbiq is designed to organize your collected leads into a more consistent structure so that when export functionality is confirmed and documented, moving from research to outreach should be more straightforward than working from scattered notes or inconsistent spreadsheet rows.
+## What's included in an export
 
-## Where to check for updates
+Your export carries over the fields you've collected for each lead — business name, category, and (where you've used [Scan Website](/help/scanning-websites-for-contact-details/)) the business's website, email, phone number, and social media links.
 
-This page will be updated once export formats and any related limits are confirmed. In the meantime, the [Pricing page](/pricing/) and [Features page](/features/) also flag which capabilities are confirmed versus still in development.
+## Exporting your list
+
+1. Finish reviewing and organizing the leads you want in your list.
+2. Choose **Export** from the LeadOrbiq panel.
+3. Pick CSV or Excel.
+4. The file downloads to your computer, ready to import into your outreach tool or CRM.
+
+## Next step
+
+See [Scanning websites for contact details](/help/scanning-websites-for-contact-details/) to fill in email, phone, and social links before you export, or [Collecting and organizing leads](/help/collecting-leads/) if you're still building your list.

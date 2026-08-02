@@ -42,7 +42,7 @@ this `docs/` folder.
 | `/use-cases/` | 6 audience sections + outreach guidance |
 | `/pricing/` | Monthly $6.99 / Yearly $49.99 / Lifetime $99.99 — real pricing, no comparison table |
 | `/help/` | Content-collection-backed index with unified filterable grid (category pills + live search) |
-| `/help/[slug]/` | 8 help articles across all 8 required categories |
+| `/help/[slug]/` | 9 help articles across all 8 required categories |
 | `/contact/` | Full validated form, see "Contact form" below |
 | `/privacy-policy/` | Drafted, several sections marked `[VERIFY]` |
 | `/terms-of-service/` | Drafted, two sections marked `[VERIFY]` |
@@ -249,6 +249,83 @@ pill, not a real rendering issue — verified by re-capturing the same
 viewport region with a normal (non-full-page) screenshot, which showed
 clean content underneath.
 
+## Round 3 revisions (mint rebrand, Satoshi, motion, real product capabilities)
+
+A third pass addressed a further batch of explicit user requests:
+
+1. **Brand color: indigo → mint.** `--indigo` was renamed to `--mint`
+   (`#12b76a` light / `#32d583` dark) in `src/styles/tokens.css`, with every
+   consumer (favicon, OG image generator, shadows/glows) updated to match.
+   Because the new mint is too bright for reliable white-text contrast, a new
+   `--color-on-brand` token (a fixed dark ink) was introduced and swapped in
+   everywhere text sits directly on the brand-gradient fill (`Button`,
+   `PricingCard`'s "Most popular" badge, `FeatureCard`'s icon badge,
+   `ProblemSection`'s step numbers, `WorkflowVisual`'s active step,
+   `MapLeadVisual`'s selected pin) — dark-on-bright-accent instead of
+   white-on-accent, both more legible and more in line with current SaaS
+   conventions for a saturated accent color.
+2. **Satoshi font, sitewide.** Loaded via Fontshare's official CDN
+   (`<link>` tags in `BaseLayout.astro`) rather than self-hosting the font
+   files — Fontshare's license is free for commercial use, but self-hosting
+   the raw files would additionally require ITF's written consent, so the
+   CDN route was used instead. Note: this sandbox's outbound network policy
+   blocks `api.fontshare.com`, so Satoshi could not be visually verified
+   from within this session; the site correctly falls through to Inter/
+   system-ui in the meantime, and the `<link>` tags will work normally for
+   real site visitors.
+3. **Breadcrumbs redesigned.** Replaced the bare "Home / Pricing" text row
+   sitting flush under the header with a floating glass-panel pill (home
+   icon, chevron separators, `--radius-pill` rounding, elevation shadow) —
+   see `Breadcrumbs.astro`.
+4. **Footer redesigned** with a mint radial-glow background, a large
+   low-opacity "LeadOrbiq" wordmark watermark, a gradient-bordered CTA
+   panel, and a "Back to top" affordance — see `SiteFooter.astro`.
+5. **Motion**: smooth scroll-reveal on every top-level page `<section>`
+   (IntersectionObserver-driven, sections already in the initial viewport
+   skip animating), a small orbiting-node preloader badge shown on outgoing
+   internal navigations past ~120ms, and a native cross-document
+   `@view-transition { navigation: auto; }` crossfade between pages — see
+   the script and `::view-transition-old/new(root)` rules in
+   `BaseLayout.astro` / `global.css`, and `PageLoader.astro`.
+   - **Astro's `ClientRouter` (SPA view-transitions) was deliberately not
+     used.** It was tried first, but it broke every script on the site that
+     assumed a fresh full-page load per navigation (theme toggle, desktop
+     dropdown, mobile nav, section-rail scrollspy all stopped working after
+     one client-side navigation in testing). The native CSS
+     cross-document view-transition gets the same smooth-crossfade effect
+     with zero navigation-model change — every page load is still a normal
+     full page load, so none of the site's existing scripts needed to be
+     rewritten for SPA semantics.
+   - A defensive safety-net timeout force-reveals any still-hidden sections
+     after 2.5s, since renderers that don't simulate real scrolling (some
+     crawlers, print/PDF, full-page screenshot tools) never fire
+     `IntersectionObserver` on their own — confirmed via Playwright
+     full-page screenshots showing sections stuck at `opacity: 0` before
+     this fix, and confirmed fixed after.
+6. **Real product capabilities documented.** Four confirmed capabilities
+   were added across the site's content (not just one component):
+   advanced Google Maps search filters, automatic map-area expansion when a
+   niche is exhausted nearby, the **Scan Website** AI feature (reads a
+   business's own site to pull its email, phone, and social media links),
+   and CSV/Excel export. This touched `src/data/workflow.ts` (`dataFields`
+   now marks Website/Email/Phone/Social links as confirmed,
+   `howItWorksSteps`/`stickyStorySteps`/`leadOrbiqWorkflow`/
+   `comparisonManual`/`comparisonLeadOrbiq` all rewritten to reflect the
+   real workflow), `src/data/features.ts` (`bentoFeatures`/
+   `detailedFeatures` lead with the four new capabilities),
+   `ExportFlowVisual.astro` (now names CSV/Excel instead of "exact export
+   options will be confirmed"), `src/data/faq.ts` (export and email
+   questions now answered directly; two new FAQ entries added for filters
+   and map auto-expansion), `src/data/pricing.ts` (Monthly's feature list
+   now names Scan Website and CSV/Excel export), and the Help Center: a new
+   article ("Scanning websites for contact details"), a full rewrite of
+   "Exporting your list" (previously a "not confirmed yet" placeholder),
+   and updates to "Collecting and organizing leads", "Getting started", and
+   "The Google Maps research workflow" for the same facts. `Location`,
+   `Rating`, `Review count`, `Notes`, and `Collection status` remain
+   unverified and still show the "Verify" badge — only what the user
+   explicitly confirmed was marked confirmed.
+
 ## Remaining `[VERIFY]` items (do not remove until confirmed)
 
 Per `01-PRODUCT-BRIEF.md` and `09-VERIFICATION-AND-LAUNCH-CHECKLIST.md`, the
@@ -258,17 +335,16 @@ be resolved with real product/business facts before launch:
 - Chrome Web Store URL (`PUBLIC_CHROME_STORE_URL` env var — currently falls
   back to a generic Chrome Web Store category link, and every "Add to Chrome"
   CTA is labeled honestly rather than pointing to a fake listing)
-- Exact supported data fields beyond business name/category (email, phone,
-  website, rating, review count, social links)
-- Export formats and limits (CSV/XLSX/Sheets — none claimed)
-- Pricing: plan names, prices, billing period, currency, trial, refund policy
+- Additional data fields beyond what's now confirmed: `Location`, `Rating`,
+  `Review count`, `Notes`, `Collection status` (business name, category,
+  website, email, phone, and social links are confirmed as of round 3 — see
+  below)
 - Account requirement, cloud vs. local storage behavior, data retention
 - Third-party processors, analytics tooling, payment processor
 - Team/collaboration features
 - Customer support email (`support@leadorbiq.com` is a placeholder domain
   matching `PUBLIC_SITE_URL`'s default — confirm the real inbox)
 - Governing law / jurisdiction for Terms of Service
-- Licensed Satoshi font files (currently using the documented fallback stack)
 - Any user counts, review counts, testimonials, or performance claims — none
   were invented; none appear on the site
 
@@ -276,6 +352,13 @@ Pricing (Monthly $6.99 / Yearly $49.99 / Lifetime $99.99) was supplied
 directly by the user in round 2 and is no longer a placeholder — it is real
 data reflected in `src/data/pricing.ts`, `pricing.astro`, `PricingTeaser`,
 `faq.ts`, and the legal pages.
+
+As of round 3, four more capabilities were supplied directly by the user and
+are no longer placeholders: advanced Google Maps search filters, automatic
+map-area expansion, the Scan Website AI feature (email/phone/social
+extraction), and CSV/Excel export. Satoshi is loading via Fontshare's CDN
+(not self-hosted — see "Round 3 revisions" above), so the font-license
+placeholder is also resolved.
 
 ## Environment variables
 

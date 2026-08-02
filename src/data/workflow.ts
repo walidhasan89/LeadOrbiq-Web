@@ -8,24 +8,26 @@ export const howItWorksSteps: WorkflowStep[] = [
   {
     step: 1,
     title: "Search your target market",
-    description: "Choose the service, industry, and location you want to research in Google Maps.",
+    description:
+      "Choose the service, industry, and location you want to research in Google Maps, then narrow results with advanced filters.",
   },
   {
     step: 2,
     title: "Review relevant businesses",
-    description: "Look through the results and focus on companies that match your campaign.",
+    description:
+      "Look through the results and focus on companies that match your campaign. When a niche runs low in one area, LeadOrbiq automatically expands the map to keep surfacing leads.",
   },
   {
     step: 3,
-    title: "Collect and organize details",
+    title: "Collect details and scan websites",
     description:
-      "Use LeadOrbiq to reduce repetitive copying and keep prospect information in a more consistent structure.",
+      "Collect business details, then click Scan Website to have LeadOrbiq's AI pull email, phone, and social media links from each site automatically.",
   },
   {
     step: 4,
-    title: "Continue your outreach workflow",
+    title: "Export and continue outreach",
     description:
-      "Review your list, verify important details, and use the information to create relevant, personalized outreach.",
+      "Export your organized list to CSV or Excel, verify important details, and use the information to create relevant, personalized outreach.",
   },
 ];
 
@@ -33,23 +35,25 @@ export const stickyStorySteps: WorkflowStep[] = [
   {
     step: 1,
     title: "Find the right market",
-    description: "Start with the niche, service, and location that match your offer.",
+    description: "Start with the niche, service, and location that match your offer, then apply filters to focus the results.",
   },
   {
     step: 2,
     title: "Review before collecting",
-    description: "Good outreach begins with relevant prospects, not the largest possible list.",
+    description:
+      "Good outreach begins with relevant prospects, not the largest possible list — LeadOrbiq expands the map automatically once a niche is exhausted nearby.",
   },
   {
     step: 3,
-    title: "Organize useful details",
-    description: "Keep the information you need in a consistent, reviewable structure.",
+    title: "Scan websites for contact details",
+    description:
+      "Click Scan Website and LeadOrbiq's AI reads the business's site to pull email, phone, and social media links for you.",
   },
   {
     step: 4,
-    title: "Verify and personalize",
+    title: "Export and personalize",
     description:
-      "Check important details before contacting a business and tailor every message to the prospect.",
+      "Export your list to CSV or Excel, verify important details, and tailor every message to the prospect.",
   },
 ];
 
@@ -63,17 +67,20 @@ export const manualWorkflow: string[] = [
 ];
 
 export const leadOrbiqWorkflow: string[] = [
-  "Search your target market",
-  "Review relevant businesses",
+  "Search your target market with advanced filters",
+  "Review relevant businesses (map auto-expands when a niche runs low)",
   "Collect useful details",
+  "Scan websites for email, phone, and social links",
   "Organize your list",
-  "Prepare for outreach",
+  "Export to CSV or Excel",
 ];
 
 export const comparisonManual: string[] = [
   "Repetitive copy and paste",
   "Inconsistent spreadsheet rows",
   "Too many open tabs",
+  "Manually digging through every website for contact info",
+  "Stuck once one area runs out of leads",
   "Easy-to-miss details",
   "Slow list preparation",
 ];
@@ -82,8 +89,10 @@ export const comparisonLeadOrbiq: string[] = [
   "Guided lead collection",
   "More consistent organization",
   "Fewer repeated actions",
+  "AI scans each website for email, phone, and social links",
+  "Map auto-expands to keep finding leads",
   "Easier list review",
-  "Clearer campaign preparation",
+  "Export to CSV or Excel in a click",
 ];
 
 export const outcomeRail: string[] = [
@@ -99,20 +108,22 @@ export interface DataField {
 }
 
 /**
- * Only "Business name" and "Category" reflect confirmed positioning from
- * docs/01-PRODUCT-BRIEF.md (business info organized around Maps prospecting).
- * Every other field is unverified and rendered with an explicit badge.
+ * "Business name" and "Category" come from Google Maps listing data.
+ * "Website", "Phone", "Email", and "Social links" are confirmed via the
+ * Scan Website feature, which reads each business's site with AI to pull
+ * those details automatically. Remaining fields are still unverified and
+ * rendered with an explicit badge.
  */
 export const dataFields: DataField[] = [
   { label: "Business name", verified: true },
   { label: "Category", verified: true },
+  { label: "Website", verified: true },
+  { label: "Email", verified: true },
+  { label: "Phone", verified: true },
+  { label: "Social links", verified: true },
   { label: "Location", verified: false },
-  { label: "Website", verified: false },
-  { label: "Phone", verified: false },
   { label: "Rating", verified: false },
   { label: "Review count", verified: false },
-  { label: "Social links", verified: false },
-  { label: "Email", verified: false },
   { label: "Notes", verified: false },
   { label: "Collection status", verified: false },
 ];

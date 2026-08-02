@@ -1,0 +1,104 @@
+---
+// Branded page-transition indicator: a tiny orbiting-node badge (echoing the
+// LogoMark motif) that appears only if a navigation takes long enough to be
+// noticeable, tied to the astro:transitions lifecycle in BaseLayout.astro.
+---
+
+<div id="page-loader" class="page-loader" aria-hidden="true">
+  <div class="page-loader-backdrop"></div>
+  <div class="page-loader-badge">
+    <span class="page-loader-ring"></span>
+    <span class="page-loader-orbit">
+      <span class="page-loader-node"></span>
+    </span>
+    <span class="page-loader-core"></span>
+  </div>
+</div>
+
+<style>
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+
+  .page-loader.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .page-loader-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-bg) 45%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .page-loader-badge {
+    position: relative;
+    width: 52px;
+    height: 52px;
+  }
+
+  .page-loader-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    border: 2px solid color-mix(in srgb, var(--color-brand) 25%, transparent);
+  }
+
+  .page-loader-orbit {
+    position: absolute;
+    inset: 0;
+    animation: page-loader-spin 1s linear infinite;
+  }
+
+  .page-loader-node {
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    margin-left: -3.5px;
+    border-radius: 9999px;
+    background: var(--color-brand);
+    box-shadow: 0 0 10px 2px color-mix(in srgb, var(--color-brand) 70%, transparent);
+  }
+
+  .page-loader-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 13px;
+    height: 13px;
+    margin: -6.5px;
+    border-radius: 9999px;
+    background: var(--color-brand);
+    animation: page-loader-pulse 1s ease-in-out infinite;
+  }
+
+  @keyframes page-loader-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes page-loader-pulse {
+    0%,
+    100% {
+      transform: scale(0.85);
+      opacity: 0.75;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+  }
+</style>

@@ -18,7 +18,7 @@ import { faqSchema } from "@utils/seo";
 
 const featureIcons: Array<
   "map" | "grid" | "clock" | "review" | "layers" | "export" | "duplicate" | "search"
-> = ["map", "grid", "clock", "review", "layers", "search"];
+> = ["search", "map", "review", "export", "grid", "layers"];
 
 const featuresFaq = homepageFaq.filter((item) =>
   [
@@ -26,6 +26,8 @@ const featuresFaq = homepageFaq.filter((item) =>
     "What business information can it collect?",
     "Can I export my lead list?",
     "Does LeadOrbiq work with Google Maps?",
+    "Can I filter my search results?",
+    "What happens when a niche runs out of businesses in an area?",
   ].includes(item.question),
 );
 const featuresFaqSchema = faqSchema(featuresFaq);

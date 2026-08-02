@@ -21,8 +21,8 @@ const ogSvg = `
       <stop offset="100%" stop-color="#0B1428"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.8" cy="0.15" r="0.6">
-      <stop offset="0%" stop-color="rgba(99,102,241,0.35)"/>
-      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+      <stop offset="0%" stop-color="rgba(50,213,131,0.35)"/>
+      <stop offset="100%" stop-color="rgba(50,213,131,0)"/>
     </radialGradient>
     <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
       <path d="M48 0H0V48" fill="none" stroke="rgba(159,178,214,0.10)" stroke-width="1"/>
@@ -34,17 +34,17 @@ const ogSvg = `
   <rect width="1200" height="630" fill="url(#glow)"/>
 
   <!-- orbit ring motif -->
-  <ellipse cx="960" cy="470" rx="260" ry="150" transform="rotate(-18 960 470)" fill="none" stroke="rgba(99,102,241,0.35)" stroke-width="2" stroke-dasharray="4 10"/>
-  <circle cx="960" cy="470" r="70" fill="#6366F1" opacity="0.9"/>
-  <circle cx="1130" cy="360" r="16" fill="#6366F1"/>
-  <circle cx="810" cy="560" r="10" fill="#6366F1"/>
+  <ellipse cx="960" cy="470" rx="260" ry="150" transform="rotate(-18 960 470)" fill="none" stroke="rgba(50,213,131,0.35)" stroke-width="2" stroke-dasharray="4 10"/>
+  <circle cx="960" cy="470" r="70" fill="#32D583" opacity="0.9"/>
+  <circle cx="1130" cy="360" r="16" fill="#32D583"/>
+  <circle cx="810" cy="560" r="10" fill="#32D583"/>
 
   <!-- logo mark -->
   <g transform="translate(96 92)">
-    <ellipse cx="24" cy="24" rx="26" ry="15" transform="rotate(-24 24 24)" fill="none" stroke="#6366F1" stroke-width="4"/>
-    <circle cx="24" cy="24" r="11" fill="#6366F1"/>
+    <ellipse cx="24" cy="24" rx="26" ry="15" transform="rotate(-24 24 24)" fill="none" stroke="#32D583" stroke-width="4"/>
+    <circle cx="24" cy="24" r="11" fill="#32D583"/>
     <circle cx="24" cy="24" r="4.2" fill="#050816"/>
-    <circle cx="45" cy="12" r="5" fill="#6366F1"/>
+    <circle cx="45" cy="12" r="5" fill="#32D583"/>
   </g>
   <text x="164" y="122" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#F6F8FF">LeadOrbiq</text>
 

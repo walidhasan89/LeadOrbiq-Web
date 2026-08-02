@@ -2,10 +2,10 @@
   <defs>
     <style>
       .bg { fill: #F7F9FF; }
-      .mark { stroke: #4338CA; fill: #4338CA; }
+      .mark { stroke: #12B76A; fill: #12B76A; }
       @media (prefers-color-scheme: dark) {
         .bg { fill: #050816; }
-        .mark { stroke: #6366F1; fill: #6366F1; }
+        .mark { stroke: #32D583; fill: #32D583; }
       }
     </style>
   </defs>

@@ -15,8 +15,13 @@
   --cloud-50: #f7f9ff;
   --cloud-100: #eef3ff;
 
-  /* Single solid brand color (deep indigo) — no gradients or secondary hues. */
-  --indigo: #4338ca;
+  /* Single solid brand color (premium mint green) — no gradients or secondary hues. */
+  --mint: #12b76a;
+
+  /* Fixed dark ink used for text/icons drawn directly on a mint-filled
+     surface (buttons, badges). Stays constant across light/dark theme since
+     the mint surface itself doesn't change — only the surrounding UI does. */
+  --color-on-brand: #04140d;
 
   /* ---- surfaces & text (light) ---- */
   --color-bg: var(--cloud-50);
@@ -35,14 +40,14 @@
      One flat color everywhere. `--gradient-brand` keeps the same CSS
      custom-property name components already use (`bg-[image:...]`) but its
      two stops are identical, so it paints as pure solid indigo. */
-  --color-brand: var(--indigo);
-  --color-accent: var(--indigo);
+  --color-brand: var(--mint);
+  --color-accent: var(--mint);
 
-  --gradient-brand: linear-gradient(var(--indigo), var(--indigo));
+  --gradient-brand: linear-gradient(var(--mint), var(--mint));
   --gradient-glow: radial-gradient(
     circle,
-    rgba(67, 56, 202, 0.24),
-    rgba(67, 56, 202, 0.08) 48%,
+    rgba(18, 183, 106, 0.24),
+    rgba(18, 183, 106, 0.08) 48%,
     transparent 72%
   );
 
@@ -54,7 +59,7 @@
   /* ---- elevation ---- */
   --shadow-ambient: 0 1px 2px rgba(8, 16, 32, 0.06);
   --shadow-elevation: 0 18px 40px -20px rgba(24, 40, 80, 0.28);
-  --shadow-glow: 0 0 0 1px rgba(67, 56, 202, 0.08), 0 20px 60px -24px rgba(67, 56, 202, 0.35);
+  --shadow-glow: 0 0 0 1px rgba(18, 183, 106, 0.1), 0 20px 60px -24px rgba(18, 183, 106, 0.4);
   --shadow-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
   /* ---- radius ---- */
@@ -107,9 +112,9 @@
   --color-text-secondary: #aebbd4;
   --color-text-inverted: #081020;
 
-  /* Brighter indigo shade in dark mode for AA contrast against the near-black
+  /* Brighter mint shade in dark mode for AA contrast against the near-black
      background — same hue family as light mode, not a different color. */
-  --indigo: #6366f1;
+  --mint: #32d583;
 
   --color-success: #4cf0c4;
   --color-warning: #ffcc66;
@@ -117,14 +122,14 @@
 
   --shadow-ambient: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-elevation: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
-  --shadow-glow: 0 0 0 1px rgba(99, 102, 241, 0.18), 0 24px 70px -20px rgba(99, 102, 241, 0.45);
+  --shadow-glow: 0 0 0 1px rgba(50, 213, 131, 0.2), 0 24px 70px -20px rgba(50, 213, 131, 0.5);
   --shadow-inner-highlight: inset 0 1px 0 rgba(159, 178, 214, 0.14);
 
-  --gradient-brand: linear-gradient(var(--indigo), var(--indigo));
+  --gradient-brand: linear-gradient(var(--mint), var(--mint));
   --gradient-glow: radial-gradient(
     circle,
-    rgba(99, 102, 241, 0.3),
-    rgba(99, 102, 241, 0.1) 48%,
+    rgba(50, 213, 131, 0.32),
+    rgba(50, 213, 131, 0.1) 48%,
     transparent 72%
   );
 

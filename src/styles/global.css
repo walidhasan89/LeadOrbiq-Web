@@ -1,12 +1,19 @@
 @import "tailwindcss";
 @import "./tokens.css";
 
+/* Opts every same-origin navigation into the browser's native cross-document
+   view transition (Chromium today; a no-op elsewhere, so unsupported
+   browsers just keep their normal instant navigation). This is what makes
+   the ::view-transition-old/new(root) animations further down actually fire
+   — there's no JS router involved, so every page keeps loading fresh. */
+@view-transition {
+  navigation: auto;
+}
+
 /*
-  Font note: Satoshi is the specified brand typeface, but no licensed font
-  files were supplied with this build. Self-hosting unlicensed font files is
-  not permitted (see docs/04-DESIGN-SYSTEM.md), so the stack falls through to
-  a metrically similar system stack until licensed Satoshi files are added to
-  public/fonts and registered here. See docs/IMPLEMENTATION-STATUS.md.
+  Font: Satoshi, loaded via Fontshare's CDN (see the <link> tags in
+  BaseLayout.astro). Inter/system-ui stay in the stack as the fallback while
+  the Fontshare stylesheet loads and for any environment that can't reach it.
 */
 @theme inline {
   --font-sans:
@@ -211,6 +218,23 @@
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+
+  /* Scroll-reveal: applied by the script in BaseLayout.astro to top-level
+     <section> elements as they're observed. Sections already in the initial
+     viewport get `.is-visible` immediately, with no animation, so only
+     content actually revealed by scrolling ever animates in. */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity var(--duration-reveal) var(--ease-orbit),
+      transform var(--duration-reveal) var(--ease-orbit);
+  }
+
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @layer utilities {
@@ -239,5 +263,34 @@
   }
   50% {
     transform: translate3d(0, -14px, 0);
+  }
+}
+
+/* Page-open transition (astro:transitions ClientRouter). Reduced-motion
+   users keep Astro's default instant swap — this only layers on top of it. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: page-transition-out 160ms ease-in both;
+  }
+
+  ::view-transition-new(root) {
+    animation: page-transition-in 360ms var(--ease-orbit) both;
+  }
+}
+
+@keyframes page-transition-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-transition-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

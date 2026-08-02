@@ -12,9 +12,9 @@ const uid = crypto.randomUUID().slice(0, 8);
 <footer
   class="relative mt-24 overflow-hidden border-t border-[var(--color-border)] bg-[var(--ink-950)] text-[var(--color-text-inverted)]"
 >
-  <div class="pointer-events-none absolute inset-0 opacity-70" aria-hidden="true">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
     <svg
-      class="h-full w-full"
+      class="h-full w-full opacity-60"
       preserveAspectRatio="xMidYMid slice"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -27,27 +27,37 @@ const uid = crypto.randomUUID().slice(0, 8);
       <rect width="100%" height="100%" fill={`url(#footer-grid-${uid})`}></rect>
     </svg>
     <div
-      class="absolute -top-32 right-0 h-96 w-96 rounded-full opacity-40 blur-3xl"
-      style="background: var(--gradient-glow);"
+      class="footer-glow-a absolute -top-40 right-[-10%] h-[32rem] w-[32rem] rounded-full opacity-50 blur-3xl"
     >
     </div>
+    <div
+      class="footer-glow-b absolute bottom-[-14rem] left-[-8%] h-[28rem] w-[28rem] rounded-full opacity-40 blur-3xl"
+    >
+    </div>
+    <p
+      class="footer-watermark pointer-events-none absolute -bottom-10 left-1/2 hidden -translate-x-1/2 select-none whitespace-nowrap text-[13rem] font-bold leading-none tracking-tight sm:block"
+    >
+      LeadOrbiq
+    </p>
   </div>
 
   <Container size="wide" class="relative py-16 sm:py-20">
-    <div
-      class="glass-panel-strong flex flex-col items-start gap-6 rounded-[var(--radius-panel)] border border-white/10 bg-white/[0.04] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
-    >
-      <div class="flex flex-col gap-2">
-        <h2 class="text-h3 font-semibold text-white">
-          Bring structure to your next prospecting campaign.
-        </h2>
-        <p class="max-w-xl text-[var(--color-text-secondary)]">
-          LeadOrbiq is a Chrome extension. Review permissions before installing.
-        </p>
+    <div class="footer-cta-border rounded-[var(--radius-panel)] p-px">
+      <div
+        class="glass-panel-strong flex flex-col items-start gap-6 rounded-[calc(var(--radius-panel)-1px)] border border-white/10 bg-white/[0.04] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
+      >
+        <div class="flex flex-col gap-2">
+          <h2 class="text-h3 font-semibold text-white">
+            Bring structure to your next prospecting campaign.
+          </h2>
+          <p class="max-w-xl text-[var(--color-text-secondary)]">
+            LeadOrbiq is a Chrome extension. Review permissions before installing.
+          </p>
+        </div>
+        <Button href={siteConfig.chromeStoreUrl} external size="lg" class="shrink-0">
+          Add to Chrome
+        </Button>
       </div>
-      <Button href={siteConfig.chromeStoreUrl} external size="lg" class="shrink-0">
-        Add to Chrome
-      </Button>
     </div>
 
     <div class="mt-16 grid grid-cols-2 gap-10 sm:grid-cols-4 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
@@ -68,7 +78,7 @@ const uid = crypto.randomUUID().slice(0, 8);
               <li>
                 <a
                   href={link.href}
-                  class="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-white"
+                  class="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--mint)]"
                 >
                   {link.label}
                 </a>
@@ -86,7 +96,7 @@ const uid = crypto.randomUUID().slice(0, 8);
               <li>
                 <a
                   href={link.href}
-                  class="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-white"
+                  class="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--mint)]"
                 >
                   {link.label}
                 </a>
@@ -104,7 +114,7 @@ const uid = crypto.randomUUID().slice(0, 8);
               <li>
                 <a
                   href={link.href}
-                  class="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-white"
+                  class="text-sm text-[var(--color-text-secondary)] transition-colors hover:text-[var(--mint)]"
                 >
                   {link.label}
                 </a>
@@ -116,13 +126,81 @@ const uid = crypto.randomUUID().slice(0, 8);
     </div>
 
     <div
-      class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-[var(--color-text-secondary)] sm:flex-row sm:items-center sm:justify-between"
+      class="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 text-sm text-[var(--color-text-secondary)] sm:flex-row sm:items-center sm:justify-between"
     >
-      <p>&copy; {year} LeadOrbiq. All rights reserved.</p>
-      <p class="max-w-2xl text-xs text-white/40">
-        LeadOrbiq is an independent Chrome extension and is not affiliated with, endorsed by, or
-        sponsored by Google. "Google Maps" is a trademark of Google LLC.
-      </p>
+      <div class="flex flex-col gap-2">
+        <p>&copy; {year} LeadOrbiq. All rights reserved.</p>
+        <p class="max-w-2xl text-xs text-white/40">
+          LeadOrbiq is an independent Chrome extension and is not affiliated with, endorsed by, or
+          sponsored by Google. "Google Maps" is a trademark of Google LLC.
+        </p>
+      </div>
+      <a
+        href="#top"
+        data-back-to-top
+        class="group inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-full border border-white/10 px-4 py-2 text-xs font-medium text-white/70 transition-colors hover:border-[var(--mint)]/40 hover:text-white sm:self-auto"
+      >
+        Back to top
+        <svg
+          aria-hidden="true"
+          class="h-3.5 w-3.5 shrink-0 text-[var(--mint)] transition-transform group-hover:-translate-y-0.5"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M8 12.5V3.5M4 7.5 8 3.5l4 4" />
+        </svg>
+      </a>
     </div>
   </Container>
 </footer>
+
+<style>
+  .footer-glow-a {
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--mint) 55%, transparent),
+      transparent 70%
+    );
+  }
+
+  .footer-glow-b {
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--mint) 35%, transparent),
+      transparent 70%
+    );
+  }
+
+  .footer-watermark {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--mint) 22%, transparent),
+      transparent
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .footer-cta-border {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--mint) 70%, transparent),
+      transparent 55%,
+      color-mix(in srgb, var(--mint) 25%, transparent)
+    );
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>("[data-back-to-top]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+</script>

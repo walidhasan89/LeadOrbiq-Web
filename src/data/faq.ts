@@ -22,16 +22,27 @@ export const homepageFaq: FAQItem[] = [
   {
     question: "What business information can it collect?",
     answer:
-      "LeadOrbiq is built to collect and organize useful business details as you research prospects on Google Maps, starting with business name and category. Check the Features page for the current confirmed field list.",
+      "LeadOrbiq collects business name and category from Google Maps, and can pull a business's website, email, phone number, and social media links by scanning its site with AI. Check the Features page for the current confirmed field list.",
   },
   {
     question: "Can I export my lead list?",
     answer:
-      "Exporting your organized list is part of the LeadOrbiq roadmap. Supported formats will be published here as soon as they're finalized.",
+      "Yes. Export your organized list to CSV or Excel whenever you're ready to move into outreach or your CRM.",
   },
   {
     question: "Does LeadOrbiq find email addresses?",
-    answer: "Email discovery isn't a confirmed capability yet. We'll update this answer as soon as it is.",
+    answer:
+      "Yes. Click Scan Website on a collected lead and LeadOrbiq's AI reads that business's site to pull its email address, phone number, and social media links automatically.",
+  },
+  {
+    question: "Can I filter my search results?",
+    answer:
+      "Yes. LeadOrbiq adds advanced filters on top of your Google Maps search so you can narrow results down before you start collecting.",
+  },
+  {
+    question: "What happens when a niche runs out of businesses in an area?",
+    answer:
+      "LeadOrbiq automatically expands the map area to keep surfacing new businesses in that niche, so you don't have to restart your search manually.",
   },
   {
     question: "Is there a free plan?",

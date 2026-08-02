@@ -15,7 +15,11 @@ The workflow starts the same way most local-business research does: searching Go
 
 ## Reviewing results
 
-Not every result in a Google Maps search is a good prospect. Part of the workflow is reviewing listings and deciding which businesses actually match your campaign — the right industry, the right location, the right size, or whatever criteria matter for your outreach.
+Not every result in a Google Maps search is a good prospect. Part of the workflow is reviewing listings and deciding which businesses actually match your campaign — the right industry, the right location, the right size, or whatever criteria matter for your outreach. Advanced filters help you narrow results down before you start reviewing.
+
+## Automatic map expansion
+
+Some niches only have a handful of businesses in a given area. When LeadOrbiq detects that a niche is exhausted nearby, it automatically expands the map area so you keep finding new businesses instead of manually re-running the search farther out.
 
 ## Where LeadOrbiq fits in
 

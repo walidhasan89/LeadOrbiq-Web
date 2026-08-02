@@ -24,8 +24,9 @@ export const pricingPlans: PricingPlan[] = [
     description: "Full access, billed month to month.",
     features: [
       "Full access to the LeadOrbiq Chrome extension",
-      "Google Maps-centered lead collection",
-      "Organized, review-ready prospect lists",
+      "Google Maps-centered lead collection with advanced filters",
+      "AI-powered Scan Website (email, phone, social links)",
+      "Export to CSV or Excel",
       "Cancel anytime — no long-term commitment",
     ],
     ctaLabel: "Add to Chrome",

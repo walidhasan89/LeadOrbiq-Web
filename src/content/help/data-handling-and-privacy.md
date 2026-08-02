@@ -13,6 +13,10 @@ Data handling is one of the areas we're most careful to describe accurately, rat
 
 The [Privacy Policy](/privacy-policy/) is the authoritative source for how LeadOrbiq handles data, including what's collected, how it's processed, and how long it's retained. This article summarizes the general approach; the Privacy Policy governs in case of any difference.
 
+## Scan Website and AI
+
+The [Scan Website](/help/scanning-websites-for-contact-details/) feature uses AI to read a business's own public website and pull out its email, phone number, and social media links. It only reads the business's site — nothing else — and only surfaces information that business has already published publicly.
+
 ## What isn't confirmed yet
 
 Storage behavior, processing details, data retention timelines, and any third-party processors involved have not been fully confirmed for publication. Rather than guess, both this article and the Privacy Policy mark those areas clearly until they're verified.
