@@ -50,7 +50,7 @@ const guidance = [
             <li>
               <a
                 href={`#${useCase.slug}`}
-                class="inline-flex items-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]"
+                class="inline-flex items-center rounded-none border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-brand)] hover:text-[var(--color-brand)]"
               >
                 {useCase.audience}
               </a>
@@ -80,7 +80,7 @@ const guidance = [
               <ol class="grid gap-3 sm:grid-cols-2">
                 {useCase.workflow.map((step, stepIndex) => (
                   <li class="flex items-start gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-sm text-[var(--color-text-secondary)]">
-                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand)]/12 text-xs font-semibold text-[var(--color-brand)]">
+                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-none bg-[var(--color-brand)]/12 text-xs font-semibold text-[var(--color-brand)]">
                       {stepIndex + 1}
                     </span>
                     {step}

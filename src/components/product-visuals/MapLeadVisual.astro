@@ -58,7 +58,7 @@ const pins = [
 
   <div
     aria-hidden="true"
-    class="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[var(--color-brand)]/35"
+    class="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-none border border-dashed border-[var(--color-brand)]/35"
   >
   </div>
 
@@ -70,9 +70,9 @@ const pins = [
       >
         <span
           class:list={[
-            "map-pin flex h-7 w-7 items-center justify-center rounded-full border shadow-[var(--shadow-ambient)]",
+            "map-pin flex h-7 w-7 items-center justify-center rounded-none border shadow-[var(--shadow-ambient)]",
             pin.selected
-              ? "border-transparent bg-[image:var(--gradient-brand)] text-[var(--color-on-brand)]"
+              ? "border-transparent bg-[image:var(--gradient-brand)] text-white"
               : "border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] text-[var(--color-text-secondary)]",
           ]}
           aria-hidden="true"

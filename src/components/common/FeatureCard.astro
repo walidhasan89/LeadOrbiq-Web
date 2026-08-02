@@ -30,7 +30,7 @@ const paths: Record<NonNullable<Props["icon"]>, string> = {
   <div class="flex items-start justify-between gap-3">
     <span
       aria-hidden="true"
-      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--gradient-brand)] text-[var(--color-on-brand)] shadow-[var(--shadow-glow)]"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--gradient-brand)] text-white shadow-[var(--shadow-glow)]"
     >
       <svg
         viewBox="0 0 24 24"
@@ -46,7 +46,7 @@ const paths: Record<NonNullable<Props["icon"]>, string> = {
     </span>
     {
       !verified && (
-        <span class="rounded-full border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--color-warning)]">
+        <span class="rounded-none border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/10 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--color-warning)]">
           In development
         </span>
       )

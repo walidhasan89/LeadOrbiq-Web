@@ -26,7 +26,7 @@ function isActive(href: string, path: string): boolean {
               <>
                 <button
                   type="button"
-                  class="dropdown-trigger group flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-medium text-[var(--color-text-primary)] transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)] aria-expanded:bg-[var(--color-surface)]"
+                  class="dropdown-trigger group flex items-center gap-1.5 rounded-none px-4 py-2.5 text-sm font-medium text-[var(--color-text-primary)] transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)] aria-expanded:bg-[var(--color-surface)]"
                   aria-expanded="false"
                 >
                   {item.label}
@@ -71,7 +71,7 @@ function isActive(href: string, path: string): boolean {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 class:list={[
-                  "block rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)]",
+                  "block rounded-none px-4 py-2.5 text-sm font-medium transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)]",
                   active ? "text-[var(--color-brand)]" : "text-[var(--color-text-primary)]",
                 ]}
               >

@@ -13,7 +13,7 @@ const { currentPath } = Astro.props;
 <button
   type="button"
   id="mobile-nav-trigger"
-  class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] lg:hidden"
+  class="flex h-11 w-11 items-center justify-center rounded-none border border-[var(--color-border)] bg-[var(--color-surface)] lg:hidden"
   aria-label="Open menu"
   aria-expanded="false"
   aria-controls="mobile-nav-panel"
@@ -55,7 +55,7 @@ const { currentPath } = Astro.props;
       <button
         type="button"
         id="mobile-nav-close"
-        class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)]"
+        class="flex h-10 w-10 items-center justify-center rounded-none border border-[var(--color-border)]"
         aria-label="Close menu"
       >
         <svg

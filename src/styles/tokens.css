@@ -15,13 +15,9 @@
   --cloud-50: #f7f9ff;
   --cloud-100: #eef3ff;
 
-  /* Single solid brand color (premium mint green) — no gradients or secondary hues. */
+  /* Brand mint green, plus a deeper stop for the brand gradient. */
   --mint: #12b76a;
-
-  /* Fixed dark ink used for text/icons drawn directly on a mint-filled
-     surface (buttons, badges). Stays constant across light/dark theme since
-     the mint surface itself doesn't change — only the surrounding UI does. */
-  --color-on-brand: #04140d;
+  --mint-deep: #0a7d4f;
 
   /* ---- surfaces & text (light) ---- */
   --color-bg: var(--cloud-50);
@@ -36,14 +32,11 @@
   --color-text-secondary: #53627a;
   --color-text-inverted: #f6f8ff;
 
-  /* ---- brand ----
-     One flat color everywhere. `--gradient-brand` keeps the same CSS
-     custom-property name components already use (`bg-[image:...]`) but its
-     two stops are identical, so it paints as pure solid indigo. */
+  /* ---- brand ---- */
   --color-brand: var(--mint);
   --color-accent: var(--mint);
 
-  --gradient-brand: linear-gradient(var(--mint), var(--mint));
+  --gradient-brand: linear-gradient(135deg, var(--mint), var(--mint-deep));
   --gradient-glow: radial-gradient(
     circle,
     rgba(18, 183, 106, 0.24),
@@ -62,13 +55,16 @@
   --shadow-glow: 0 0 0 1px rgba(18, 183, 106, 0.1), 0 20px 60px -24px rgba(18, 183, 106, 0.4);
   --shadow-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
-  /* ---- radius ---- */
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-button: 14px;
-  --radius-card: 24px;
-  --radius-panel: 32px;
-  --radius-pill: 999px;
+  /* ---- radius ----
+     Sharp corners everywhere, by design — every surface in the system runs
+     through these tokens, so this one change covers buttons, cards, panels,
+     pills, and inputs site-wide. */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-button: 0px;
+  --radius-card: 0px;
+  --radius-panel: 0px;
+  --radius-pill: 0px;
 
   /* ---- layout ----
      Every container tier (including "wide") tops out at 1200px so the whole
@@ -115,6 +111,7 @@
   /* Brighter mint shade in dark mode for AA contrast against the near-black
      background — same hue family as light mode, not a different color. */
   --mint: #32d583;
+  --mint-deep: #16a34a;
 
   --color-success: #4cf0c4;
   --color-warning: #ffcc66;
@@ -125,7 +122,7 @@
   --shadow-glow: 0 0 0 1px rgba(50, 213, 131, 0.2), 0 24px 70px -20px rgba(50, 213, 131, 0.5);
   --shadow-inner-highlight: inset 0 1px 0 rgba(159, 178, 214, 0.14);
 
-  --gradient-brand: linear-gradient(var(--mint), var(--mint));
+  --gradient-brand: linear-gradient(135deg, var(--mint), var(--mint-deep));
   --gradient-glow: radial-gradient(
     circle,
     rgba(50, 213, 131, 0.32),

@@ -68,7 +68,7 @@ const categoriesInUse = helpCategories.filter((category) =>
           type="button"
           data-category-filter="all"
           aria-pressed="true"
-          class="category-pill rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-colors"
+          class="category-pill rounded-none border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-colors"
         >
           All topics
         </button>
@@ -78,7 +78,7 @@ const categoriesInUse = helpCategories.filter((category) =>
               type="button"
               data-category-filter={category}
               aria-pressed="false"
-              class="category-pill rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-colors"
+              class="category-pill rounded-none border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-colors"
             >
               {category}
             </button>
@@ -100,7 +100,7 @@ const categoriesInUse = helpCategories.filter((category) =>
               data-search-text={`${article.data.title} ${article.data.description} ${article.data.category}`.toLowerCase()}
               class="flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-[transform,border-color] duration-[var(--duration-control)] hover:-translate-y-0.5 hover:border-[var(--color-brand)]/50"
             >
-              <span class="w-fit rounded-full bg-[var(--color-brand)]/10 px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-[var(--color-brand)]">
+              <span class="w-fit rounded-none bg-[var(--color-brand)]/10 px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-[var(--color-brand)]">
                 {article.data.category}
               </span>
               <span class="text-base font-semibold text-[var(--color-text-primary)]">
@@ -110,7 +110,7 @@ const categoriesInUse = helpCategories.filter((category) =>
                 {article.data.description}
               </span>
               {!article.data.verified && (
-                <span class="mt-auto w-fit rounded-full bg-[var(--color-warning)]/12 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--color-warning)]">
+                <span class="mt-auto w-fit rounded-none bg-[var(--color-warning)]/12 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-[var(--color-warning)]">
                   Verification pending
                 </span>
               )}
