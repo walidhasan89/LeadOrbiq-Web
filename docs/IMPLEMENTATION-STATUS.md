@@ -40,8 +40,8 @@ this `docs/` folder.
 | `/` | Full 14-section homepage per `03-SITEMAP-AND-SECTIONS.md` |
 | `/features/` | Feature overview, workflow, verified data fields, FAQ |
 | `/use-cases/` | 6 audience sections + outreach guidance |
-| `/pricing/` | Plan cards, comparison table — all values verified placeholders |
-| `/help/` | Content-collection-backed index with live client-side search |
+| `/pricing/` | Monthly $6.99 / Yearly $49.99 / Lifetime $99.99 — real pricing, no comparison table |
+| `/help/` | Content-collection-backed index with unified filterable grid (category pills + live search) |
 | `/help/[slug]/` | 8 help articles across all 8 required categories |
 | `/contact/` | Full validated form, see "Contact form" below |
 | `/privacy-policy/` | Drafted, several sections marked `[VERIFY]` |
@@ -70,7 +70,14 @@ this `docs/` folder.
 
 - Implemented the "Intelligent Orbit" visual language from
   `04-DESIGN-SYSTEM.md`: orbit rings, location-pin/node motifs, glass panels,
-  brand gradient (blue → violet → cyan), layered shadows, subtle grain.
+  layered shadows, subtle grain. **Revised in round 2**: the original
+  blue→violet→cyan gradient was replaced sitewide with a single solid deep
+  indigo (`--indigo: #4338ca` light / `#6366f1` dark) per explicit user
+  request — see "Round 2 revisions" below.
+- **Boxed width**: every container tier, including the former 1440px "wide"
+  tier, now tops out at 1200px (`--container-wide` == `--container-main` in
+  `src/styles/tokens.css`), so no section stretches edge-to-edge on large
+  screens.
 - **Font**: Satoshi was specified but no licensed font files were supplied
   with this build. Per the design doc's own instruction ("use self-hosted
   files only when proper licensed font files are supplied"), the site uses
@@ -162,6 +169,86 @@ Automated interaction testing surfaced several real bugs, all fixed:
    one field never rebuilds the shared error list, and (b) reserving fixed
    height for inline error text so it never changes box size.
 
+## Round 2 revisions (color, layout, pricing, help center, bug sweep)
+
+A second pass addressed six explicit user requests in one batch:
+
+1. **Boxed width sitewide.** `--container-wide` reduced from 1440px to
+   1200px in `src/styles/tokens.css`, so it now matches `--container-main`.
+   Every section (including ones that previously used the "wide" container
+   tier for a full-bleed look) now reads as one consistent boxed width —
+   nothing stretches edge to edge on large screens.
+2. **Gradient removed, single solid deep indigo everywhere.** All
+   blue/violet/cyan/mint/warm design tokens were removed from
+   `src/styles/tokens.css` and `src/styles/global.css` and replaced with one
+   `--indigo` token (`#4338ca` light, `#6366f1` dark), aliased by
+   `--color-brand` and `--color-accent`. `--gradient-brand` now renders flat
+   (both stops are the same indigo) rather than being deleted outright, to
+   avoid touching every gradient consumer. `LogoMark.astro`,
+   `public/favicon.svg`, and the OG-image/icon generator
+   (`scripts/generate-images.mjs`) were all converted from `<linearGradient>`
+   fills to solid indigo, and the raster assets were regenerated.
+3. **Section-by-section bug sweep (homepage + sitewide).** Found and fixed:
+   - `LeadTableVisual.astro`: a custom CSS class named `.table-row` was
+     silently colliding with Tailwind's built-in `table-row` utility
+     (`display: table-row`), which overrode the intended `display: grid` and
+     collapsed the Business/Category/Status columns to zero gap. Renamed to
+     `.lt-row` sitewide. A follow-up audit of all custom class names found no
+     other Tailwind-utility-name collisions.
+   - `FeatureBento.astro`: the 7-item bento grid left an orphaned single card
+     alone in the last row on `sm`/`lg` breakpoints. Fixed by spanning the
+     first and last cards across extra columns so every row fills evenly.
+   - `ContactForm.astro`: Astro/JSX-style whitespace collapsing between a
+     text node and an adjacent-line `<a>` swallowed the space before "Privacy
+     Policy" in the consent label, rendering "our Privacy Policy" as
+     "ourPrivacy Policy". Fixed by keeping the text and the anchor's opening
+     tag on the same source line.
+   - `Breadcrumbs.astro`: breadcrumbs on Legal and Help Article pages were
+     hardcoded to the 1200px container while the page content below used the
+     720px "narrow" container, producing staggered left edges. Added a
+     `size` prop threaded through `MarketingLayout` → `Breadcrumbs` so each
+     page can align breadcrumbs with its own content width.
+   - Sticky-header glass-blur "bug" reported during automated testing turned
+     out to be a false positive: `getComputedStyle` at a 150–300ms capture
+     delay caught the header mid-transition (`--duration-control` is 220ms).
+     Re-verified at 1500ms with the correct `rgba(255,255,255,0.92)` +
+     `blur(20px)` values applied. No code change needed; documented here so
+     it isn't re-investigated as a real bug later.
+4. **Real pricing.** Replaced all placeholder/`[VERIFY]` pricing with
+   Monthly $6.99, Yearly $49.99 ("Most popular", ~$4.17/mo equivalent), and
+   Lifetime $99.99, modeled as one product with three billing options rather
+   than three feature-gated tiers. Higher tiers get reasonable, non-fabricated
+   differentiation (priority support, early feature access, no future
+   renewals) — see `src/data/pricing.ts`. The pricing page's tier-comparison
+   table and "not yet finalized" banner were removed and replaced with a
+   billing-highlights section and FAQ answers in real prose.
+5. **Help Center redesigned.** The original layout rendered one small grid
+   per category, and most categories had only a single article — leaving
+   large empty grid gaps that read as broken. Replaced with a single unified
+   `sm:grid-cols-2 lg:grid-cols-3` grid across all articles, each card tagged
+   with a category badge, plus category-filter pill buttons above the grid
+   that combine with the existing search box (`applyFilters()` in
+   `help/index.astro`) to filter by category and text together.
+6. **`[VERIFY]`-bracket copy removed sitewide.** The literal `[VERIFY]`
+   marker text in the homepage FAQ, privacy policy, and terms of service was
+   replaced with natural-language copy reflecting the now-real pricing and
+   product facts, while still not fabricating any capability that hasn't
+   been confirmed elsewhere in this document.
+
+### Audit method for round 2
+
+Re-verified via headless Playwright against both the dev server and (for
+the final pass) the production `astro preview` build: full-page and
+segmented-viewport screenshots of every route at 390×844 (mobile) and
+1280×900 (desktop), in both light and dark themes, plus `getComputedStyle`
+spot-checks on the specific elements involved in the bugs above. One
+apparent bug during mobile full-page capture (a dark pill overlapping card
+content on the Pricing and Contact pages) was confirmed to be a
+full-page-screenshot artifact of the fixed-position mobile section-rail
+pill, not a real rendering issue — verified by re-capturing the same
+viewport region with a normal (non-full-page) screenshot, which showed
+clean content underneath.
+
 ## Remaining `[VERIFY]` items (do not remove until confirmed)
 
 Per `01-PRODUCT-BRIEF.md` and `09-VERIFICATION-AND-LAUNCH-CHECKLIST.md`, the
@@ -184,6 +271,11 @@ be resolved with real product/business facts before launch:
 - Licensed Satoshi font files (currently using the documented fallback stack)
 - Any user counts, review counts, testimonials, or performance claims — none
   were invented; none appear on the site
+
+Pricing (Monthly $6.99 / Yearly $49.99 / Lifetime $99.99) was supplied
+directly by the user in round 2 and is no longer a placeholder — it is real
+data reflected in `src/data/pricing.ts`, `pricing.astro`, `PricingTeaser`,
+`faq.ts`, and the legal pages.
 
 ## Environment variables
 

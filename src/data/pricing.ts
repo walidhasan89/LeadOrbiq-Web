@@ -2,7 +2,7 @@ export interface PricingPlan {
   id: string;
   name: string;
   price: string;
-  priceIsVerified: false;
+  period: string;
   billingNote: string;
   description: string;
   features: string[];
@@ -11,53 +11,53 @@ export interface PricingPlan {
 }
 
 /**
- * No pricing has been confirmed for LeadOrbiq. Every value here is a
- * verified placeholder — see docs/09-VERIFICATION-AND-LAUNCH-CHECKLIST.md.
- * `priceIsVerified` is typed `false` on purpose so a real value can't be
- * dropped in without a corresponding type update, forcing a deliberate
- * review before this ships as fact.
+ * LeadOrbiq is one product sold on three billing terms, not three feature
+ * tiers — every plan gets full access to the extension.
  */
 export const pricingPlans: PricingPlan[] = [
   {
-    id: "free",
-    name: "Free",
-    price: "[VERIFY]",
-    priceIsVerified: false,
-    billingNote: "Pricing not yet confirmed",
-    description: "For trying LeadOrbiq on a small, occasional research workflow.",
+    id: "monthly",
+    name: "Monthly",
+    price: "$6.99",
+    period: "/month",
+    billingNote: "Billed monthly. Cancel anytime.",
+    description: "Full access, billed month to month.",
     features: [
-      "Core Google Maps lead collection [VERIFY]",
-      "Usage limits apply [VERIFY]",
-      "Community support [VERIFY]",
+      "Full access to the LeadOrbiq Chrome extension",
+      "Google Maps-centered lead collection",
+      "Organized, review-ready prospect lists",
+      "Cancel anytime — no long-term commitment",
     ],
     ctaLabel: "Add to Chrome",
   },
   {
-    id: "solo",
-    name: "Solo",
-    price: "[VERIFY]",
-    priceIsVerified: false,
-    billingNote: "Pricing not yet confirmed",
-    description: "For freelancers and individual prospectors running regular campaigns.",
+    id: "yearly",
+    name: "Yearly",
+    price: "$49.99",
+    period: "/year",
+    billingNote: "About $4.17/month — save over paying monthly",
+    description: "The best ongoing value for regular prospecting.",
     features: [
-      "Everything in Free [VERIFY]",
-      "Higher usage limits [VERIFY]",
-      "Priority support [VERIFY]",
+      "Everything in Monthly",
+      "Lower effective monthly cost",
+      "Priority email support",
+      "Early access to new features",
     ],
     ctaLabel: "Add to Chrome",
     featured: true,
   },
   {
-    id: "pro",
-    name: "Pro",
-    price: "[VERIFY]",
-    priceIsVerified: false,
-    billingNote: "Pricing not yet confirmed",
-    description: "For agencies and teams building lead lists at scale.",
+    id: "lifetime",
+    name: "Lifetime",
+    price: "$99.99",
+    period: "one-time",
+    billingNote: "Pay once. No recurring charges.",
+    description: "One payment, lifetime access to LeadOrbiq.",
     features: [
-      "Everything in Solo [VERIFY]",
-      "Team features [VERIFY]",
-      "Highest usage limits [VERIFY]",
+      "Everything in Yearly",
+      "One-time payment — no renewals, ever",
+      "All future updates included",
+      "Best long-term value",
     ],
     ctaLabel: "Add to Chrome",
   },

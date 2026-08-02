@@ -14,36 +14,44 @@ const pricingFaq: FAQItem[] = [
   {
     question: "Is there a free plan?",
     answer:
-      "Pricing and free-plan availability have not been confirmed yet. This page will be updated with confirmed plan details. [VERIFY PRICING AND FREE PLAN]",
+      "LeadOrbiq doesn't have a free plan. Choose Monthly, Yearly, or Lifetime billing — every plan includes full access to the extension.",
   },
   {
     question: "How does billing work?",
     answer:
-      "Billing period, currency, and tax handling have not been confirmed yet. [VERIFY BILLING DETAILS]",
+      "Monthly renews every month, Yearly renews once a year at a lower effective rate, and Lifetime is a single one-time payment with no renewals.",
   },
   {
     question: "Can I cancel anytime?",
     answer:
-      "Cancellation and refund policy have not been confirmed yet. [VERIFY CANCELLATION AND REFUND POLICY]",
+      "Monthly and Yearly plans can be cancelled anytime — you'll keep access through the end of your current billing period. Lifetime is a one-time purchase and doesn't renew, so there's nothing to cancel.",
   },
   {
     question: "Can teams use LeadOrbiq?",
-    answer: "Team features have not been confirmed yet. [VERIFY TEAM FEATURES]",
+    answer:
+      "Team seats aren't part of the current plans. If you need multiple people using LeadOrbiq, reach out through the Contact page and we'll help.",
   },
 ];
 
-const comparisonRows = [
-  { label: "Google Maps-centered lead collection", free: true, solo: true, pro: true },
-  { label: "Usage limit", free: "[VERIFY]", solo: "[VERIFY]", pro: "[VERIFY]" },
-  { label: "Export-ready structure", free: "[VERIFY]", solo: "[VERIFY]", pro: "[VERIFY]" },
-  { label: "Team seats", free: "—", solo: "[VERIFY]", pro: "[VERIFY]" },
-  { label: "Support level", free: "[VERIFY]", solo: "[VERIFY]", pro: "[VERIFY]" },
+const billingHighlights = [
+  {
+    title: "Switch anytime",
+    body: "Start on Monthly and move to Yearly or Lifetime later — you're never locked in.",
+  },
+  {
+    title: "One product, no feature gates",
+    body: "Every plan gets the same LeadOrbiq extension. You're only choosing how you pay.",
+  },
+  {
+    title: "Questions about billing",
+    body: "Reach out through the Contact page for billing or purchase questions — we respond promptly.",
+  },
 ];
 ---
 
 <MarketingLayout
   title="Pricing — LeadOrbiq"
-  description="Compare LeadOrbiq plans. Pricing, limits, and included features will be shown clearly once the final plan structure is confirmed."
+  description="LeadOrbiq pricing: $6.99/month, $49.99/year, or $99.99 one-time for lifetime access. One product, full access on every plan."
   pathname="/pricing/"
   breadcrumbs={[{ label: "Pricing", href: "/pricing/" }]}
 >
@@ -55,27 +63,13 @@ const comparisonRows = [
         align="center"
         eyebrow="Simple options"
         title="Straightforward pricing for practical prospecting."
-        body="Compare confirmed features, limits, and billing options without hidden claims or confusing add-ons."
+        body="One product. Choose how you'd rather pay for it — no hidden tiers or confusing add-ons."
       />
     </Container>
   </section>
 
-  <section class="border-t border-[var(--color-border)] pb-6 pt-2">
-    <Container size="content">
-      <div
-        class="rounded-[var(--radius-md)] border border-[var(--color-warning)]/40 bg-[var(--color-warning)]/8 px-5 py-4 text-sm text-[var(--color-text-secondary)]"
-      >
-        <strong class="text-[var(--color-text-primary)]">Pricing not yet finalized.</strong>
-        The plan names, limits, and every value marked
-        <span class="font-semibold text-[var(--color-warning)]">[VERIFY]</span>
-        below are placeholders. No price numbers are published until confirmed against the current extension
-        and billing setup.
-      </div>
-    </Container>
-  </section>
-
   <section class="section-spacing pt-8">
-    <Container size="wide">
+    <Container size="main">
       <div class="grid gap-6 lg:grid-cols-3">
         {pricingPlans.map((plan) => <PricingCard plan={plan} />)}
       </div>
@@ -83,87 +77,17 @@ const comparisonRows = [
   </section>
 
   <section class="section-spacing border-t border-[var(--color-border)]">
-    <Container size="wide">
-      <SectionHeading eyebrow="Feature comparison" title="What's included, plan by plan." />
-      <div
-        class="mt-10 overflow-x-auto rounded-[var(--radius-card)] border border-[var(--color-border)]"
-      >
-        <table class="w-full min-w-[560px] border-collapse text-sm">
-          <thead>
-            <tr class="border-b border-[var(--color-border)] bg-[var(--color-bg-soft)] text-left">
-              <th scope="col" class="px-5 py-4 font-semibold text-[var(--color-text-primary)]">
-                Feature
-              </th>
-              {
-                pricingPlans.map((plan) => (
-                  <th scope="col" class="px-5 py-4 font-semibold text-[var(--color-text-primary)]">
-                    {plan.name}
-                  </th>
-                ))
-              }
-            </tr>
-          </thead>
-          <tbody>
-            {
-              comparisonRows.map((row) => (
-                <tr class="border-b border-[var(--color-border)] last:border-b-0">
-                  <th
-                    scope="row"
-                    class="px-5 py-4 text-left font-medium text-[var(--color-text-secondary)]"
-                  >
-                    {row.label}
-                  </th>
-                  {[row.free, row.solo, row.pro].map((value) => (
-                    <td class="px-5 py-4 text-[var(--color-text-secondary)]">
-                      {value === true ? (
-                        <svg
-                          aria-hidden="true"
-                          class="h-4 w-4 text-[var(--color-success)]"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.7"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-                        </svg>
-                      ) : (
-                        value
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </Container>
-  </section>
-
-  <section class="section-spacing border-t border-[var(--color-border)]">
-    <Container size="wide">
-      <div class="grid gap-6 sm:grid-cols-2">
-        <div
-          class="flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-7"
-        >
-          <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">Usage limits</h3>
-          <p class="text-sm text-[var(--color-text-secondary)]">
-            Exact usage limits per plan have not been confirmed yet. [VERIFY USAGE LIMITS]
-          </p>
-        </div>
-        <div
-          class="flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-7"
-        >
-          <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">
-            Cancellation & billing
-          </h3>
-          <p class="text-sm text-[var(--color-text-secondary)]">
-            Cancellation, refund, and upgrade/downgrade behavior have not been confirmed yet.
-            [VERIFY CANCELLATION AND BILLING BEHAVIOR]
-          </p>
-        </div>
+    <Container size="main">
+      <SectionHeading eyebrow="How billing works" title="Every plan, the same LeadOrbiq." />
+      <div class="mt-10 grid gap-6 sm:grid-cols-3">
+        {
+          billingHighlights.map((item) => (
+            <div class="flex flex-col gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-7">
+              <h3 class="text-lg font-semibold text-[var(--color-text-primary)]">{item.title}</h3>
+              <p class="text-sm text-[var(--color-text-secondary)]">{item.body}</p>
+            </div>
+          ))
+        }
       </div>
     </Container>
   </section>

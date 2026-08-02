@@ -4,13 +4,21 @@ import StructuredData from "@components/seo/StructuredData.astro";
 
 interface Props {
   items: BreadcrumbEntry[];
+  size?: "narrow" | "content" | "main" | "wide";
 }
 
-const { items } = Astro.props;
+const { items, size = "main" } = Astro.props;
 const withHome: BreadcrumbEntry[] = [{ label: "Home", href: "/" }, ...items];
+
+const sizeClass: Record<NonNullable<Props["size"]>, string> = {
+  narrow: "container-narrow",
+  content: "container-content",
+  main: "container-main",
+  wide: "container-wide",
+};
 ---
 
-<nav aria-label="Breadcrumb" class="container-main pt-6">
+<nav aria-label="Breadcrumb" class:list={[sizeClass[size], "pt-6"]}>
   <ol class="flex flex-wrap items-center gap-1.5 text-sm text-[var(--color-text-secondary)]">
     {
       withHome.map((item, index) => {

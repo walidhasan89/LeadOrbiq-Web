@@ -11,7 +11,11 @@ interface Props extends SEOProps {
 const { lastUpdated, ...seo } = Astro.props;
 ---
 
-<MarketingLayout {...seo} breadcrumbs={[{ label: seo.title, href: seo.pathname }]}>
+<MarketingLayout
+  {...seo}
+  breadcrumbs={[{ label: seo.title, href: seo.pathname }]}
+  breadcrumbsSize="narrow"
+>
   <Container size="narrow" class="section-spacing">
     <header class="mb-10 flex flex-col gap-3 border-b border-[var(--color-border)] pb-8">
       <h1 class="text-h1 font-semibold text-[var(--color-text-primary)]">{seo.title}</h1>

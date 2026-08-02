@@ -13,6 +13,7 @@ interface Props extends SEOProps {
   showSectionRail?: boolean;
   showTrustStrip?: boolean;
   breadcrumbs?: BreadcrumbEntry[];
+  breadcrumbsSize?: "narrow" | "content" | "main" | "wide";
   schemas?: Record<string, unknown>[];
 }
 
@@ -20,6 +21,7 @@ const {
   showSectionRail = false,
   showTrustStrip = false,
   breadcrumbs,
+  breadcrumbsSize = "main",
   schemas = [],
   ...seo
 } = Astro.props;
@@ -29,7 +31,7 @@ const {
   {showTrustStrip && <TrustStrip />}
   <div id="scroll-sentinel" class="h-px w-full" aria-hidden="true"></div>
   <SiteHeader />
-  {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+  {breadcrumbs && <Breadcrumbs items={breadcrumbs} size={breadcrumbsSize} />}
   <main id="main-content" tabindex="-1" class="relative">
     <slot />
   </main>

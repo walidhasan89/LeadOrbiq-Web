@@ -6,9 +6,6 @@ interface Props {
 }
 
 const { variant = "icon", size = 32, class: className = "" } = Astro.props;
-const uid = crypto.randomUUID().slice(0, 8);
-const gradId = `lo-grad-${uid}`;
-const nodeGradId = `lo-node-${uid}`;
 ---
 
 <span class:list={["inline-flex items-center gap-2.5", className]}>
@@ -21,28 +18,17 @@ const nodeGradId = `lo-node-${uid}`;
     role="img"
     aria-label="LeadOrbiq"
   >
-    <defs>
-      <linearGradient id={gradId} x1="4" y1="6" x2="28" y2="26" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#4D7CFF"></stop>
-        <stop offset="48%" stop-color="#8B5CFF"></stop>
-        <stop offset="100%" stop-color="#38D6FF"></stop>
-      </linearGradient>
-      <radialGradient id={nodeGradId} cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0%" stop-color="#38D6FF"></stop>
-        <stop offset="100%" stop-color="#4D7CFF"></stop>
-      </radialGradient>
-    </defs>
     <ellipse
       cx="16"
       cy="16"
       rx="13"
       ry="7.5"
       transform="rotate(-24 16 16)"
-      stroke={`url(#${gradId})`}
+      stroke="var(--color-brand)"
       stroke-width="2"></ellipse>
-    <circle cx="16" cy="16" r="5.5" fill={`url(#${gradId})`}></circle>
+    <circle cx="16" cy="16" r="5.5" fill="var(--color-brand)"></circle>
     <circle cx="16" cy="16" r="2.1" fill="var(--color-bg, #050816)"></circle>
-    <circle cx="26.4" cy="10.2" r="2.4" fill={`url(#${nodeGradId})`}></circle>
+    <circle cx="26.4" cy="10.2" r="2.4" fill="var(--color-brand)"></circle>
   </svg>
   {
     variant === "full" && (
