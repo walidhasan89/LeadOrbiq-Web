@@ -43,11 +43,6 @@ export const bentoFeatures: Feature[] = [
     verified: true,
   },
   {
-    title: "Cleaner prospect review",
-    description: "Keep the businesses you're researching easier to compare and manage.",
-    verified: true,
-  },
-  {
     title: "Duplicate control",
     description: "Avoid re-reviewing prospects you've already collected.",
     verified: false,

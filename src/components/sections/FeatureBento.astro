@@ -22,18 +22,16 @@ const icons: Array<
     <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         bentoFeatures.map((feature, index) => {
-          // Keeps every row a full 4 columns wide (2+1+1, then 1+1+1+1, then
-          // a full-width closer) instead of leaving an orphan card alone in
-          // the last row.
+          // Seven cards, first spans 2 columns: row one is 2+1+1 (4 cols),
+          // row two is 1+1+1+1 (4 cols) — two full rows, no orphan card.
           const isFirst = index === 0;
-          const isLast = index === bentoFeatures.length - 1;
           return (
             <FeatureCard
               title={feature.title}
               description={feature.description}
               verified={feature.verified}
               icon={icons[index % icons.length]}
-              class={isFirst ? "sm:col-span-2" : isLast ? "sm:col-span-2 lg:col-span-4" : undefined}
+              class={isFirst ? "sm:col-span-2" : undefined}
             />
           );
         })
