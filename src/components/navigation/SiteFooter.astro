@@ -10,7 +10,7 @@ const uid = crypto.randomUUID().slice(0, 8);
 ---
 
 <footer
-  class="relative mt-24 overflow-hidden border-t border-[var(--color-border)] bg-[var(--ink-950)] text-[var(--color-text-inverted)]"
+  class="relative mt-24 overflow-hidden border-t border-[var(--color-border)] bg-[var(--color-bg-soft)] text-[var(--color-text-primary)]"
 >
   <div class="pointer-events-none absolute inset-0" aria-hidden="true">
     <svg
@@ -20,7 +20,11 @@ const uid = crypto.randomUUID().slice(0, 8);
     >
       <defs>
         <pattern id={`footer-grid-${uid}`} width="56" height="56" patternUnits="userSpaceOnUse">
-          <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(159,178,214,0.08)" stroke-width="1"
+          <path
+            d="M 56 0 L 0 0 0 56"
+            fill="none"
+            class="footer-grid-line"
+            stroke-width="1"
           ></path>
         </pattern>
       </defs>
@@ -44,10 +48,10 @@ const uid = crypto.randomUUID().slice(0, 8);
   <Container size="wide" class="relative py-16 sm:py-20">
     <div class="footer-cta-border rounded-[var(--radius-panel)] p-px">
       <div
-        class="glass-panel-strong flex flex-col items-start gap-6 rounded-[calc(var(--radius-panel)-1px)] border border-white/10 bg-white/[0.04] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
+        class="glass-panel-strong flex flex-col items-start gap-6 rounded-[calc(var(--radius-panel)-1px)] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
       >
         <div class="flex flex-col gap-2">
-          <h2 class="text-h3 font-semibold text-white">
+          <h2 class="text-h3 font-semibold text-[var(--color-text-primary)]">
             Bring structure to your next prospecting campaign.
           </h2>
           <p class="max-w-xl text-[var(--color-text-secondary)]">
@@ -71,7 +75,9 @@ const uid = crypto.randomUUID().slice(0, 8);
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/60">Product</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
+          Product
+        </h3>
         <ul class="mt-4 flex flex-col gap-3">
           {
             footerNav.product.map((link) => (
@@ -89,7 +95,9 @@ const uid = crypto.randomUUID().slice(0, 8);
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/60">Resources</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
+          Resources
+        </h3>
         <ul class="mt-4 flex flex-col gap-3">
           {
             footerNav.resources.map((link) => (
@@ -107,7 +115,9 @@ const uid = crypto.randomUUID().slice(0, 8);
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/60">Company</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
+          Company
+        </h3>
         <ul class="mt-4 flex flex-col gap-3">
           {
             footerNav.company.map((link) => (
@@ -126,11 +136,11 @@ const uid = crypto.randomUUID().slice(0, 8);
     </div>
 
     <div
-      class="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 text-sm text-[var(--color-text-secondary)] sm:flex-row sm:items-center sm:justify-between"
+      class="mt-14 flex flex-col gap-6 border-t border-[var(--color-border)] pt-8 text-sm text-[var(--color-text-secondary)] sm:flex-row sm:items-center sm:justify-between"
     >
       <div class="flex flex-col gap-2">
         <p>&copy; {year} LeadOrbiq. All rights reserved.</p>
-        <p class="max-w-2xl text-xs text-white/40">
+        <p class="max-w-2xl text-xs text-[var(--color-text-secondary)]">
           LeadOrbiq is an independent Chrome extension and is not affiliated with, endorsed by, or
           sponsored by Google. "Google Maps" is a trademark of Google LLC.
         </p>
@@ -138,7 +148,7 @@ const uid = crypto.randomUUID().slice(0, 8);
       <a
         href="#top"
         data-back-to-top
-        class="group inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-none border border-white/10 px-4 py-2 text-xs font-medium text-white/70 transition-colors hover:border-[var(--mint)]/40 hover:text-white sm:self-auto"
+        class="group inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-none border border-[var(--color-border)] px-4 py-2 text-xs font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--mint)]/40 hover:text-[var(--color-text-primary)] sm:self-auto"
       >
         Back to top
         <svg
@@ -159,6 +169,10 @@ const uid = crypto.randomUUID().slice(0, 8);
 </footer>
 
 <style>
+  .footer-grid-line {
+    stroke: var(--color-border);
+  }
+
   .footer-glow-a {
     background: radial-gradient(
       circle,
@@ -178,7 +192,7 @@ const uid = crypto.randomUUID().slice(0, 8);
   .footer-watermark {
     background: linear-gradient(
       180deg,
-      color-mix(in srgb, var(--mint) 22%, transparent),
+      color-mix(in srgb, var(--mint) 30%, transparent),
       transparent
     );
     background-clip: text;
