@@ -16,7 +16,7 @@ function isActive(href: string, path: string): boolean {
 ---
 
 <nav aria-label="Primary" class="hidden lg:block">
-  <ul class="flex items-center gap-1">
+  <ul class="flex items-center gap-0.5">
     {
       primaryNav.map((item) => {
         const active = isActive(item.href, currentPath);
@@ -26,7 +26,7 @@ function isActive(href: string, path: string): boolean {
               <>
                 <button
                   type="button"
-                  class="dropdown-trigger group flex items-center gap-1.5 rounded-none px-4 py-2.5 text-sm font-medium text-[var(--color-text-primary)] transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)] aria-expanded:bg-[var(--color-surface)]"
+                  class="nav-link dropdown-trigger group flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-[var(--color-text-primary)]"
                   aria-expanded="false"
                 >
                   {item.label}
@@ -42,17 +42,29 @@ function isActive(href: string, path: string): boolean {
                     <path d="M3 4.5 6 7.5 9 4.5" />
                   </svg>
                 </button>
-                <div class="dropdown-panel invisible absolute left-0 top-full z-40 mt-2 w-72 origin-top-left translate-y-1 rounded-[var(--radius-card)] opacity-0 transition-[opacity,transform,visibility] duration-[var(--duration-control)] ease-[var(--ease-orbit)]">
-                  <div class="glass-panel-strong rounded-[var(--radius-card)] p-2">
+                <div class="dropdown-panel invisible absolute left-0 top-full z-40 w-80 pt-3 opacity-0">
+                  <div class="glass-panel-strong border-t-2 border-t-[var(--color-brand)] p-2">
                     <ul class="flex flex-col">
                       {item.children.map((child) => (
                         <li>
                           <a
                             href={child.href}
-                            class="flex flex-col gap-0.5 rounded-[var(--radius-sm)] px-3.5 py-2.5 transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)]"
+                            class="dropdown-item group/item relative flex flex-col gap-0.5 px-4 py-3 transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-brand)]/8"
                           >
-                            <span class="text-sm font-semibold text-[var(--color-text-primary)]">
+                            <span class="flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)]">
                               {child.label}
+                              <svg
+                                aria-hidden="true"
+                                class="h-3 w-3 -translate-x-1 text-[var(--color-brand)] opacity-0 transition-all duration-[var(--duration-control)] group-hover/item:translate-x-0 group-hover/item:opacity-100"
+                                viewBox="0 0 12 12"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <path d="M2 6h8M6.5 2.5 10 6l-3.5 3.5" />
+                              </svg>
                             </span>
                             {child.description && (
                               <span class="text-xs text-[var(--color-text-secondary)]">
@@ -71,8 +83,10 @@ function isActive(href: string, path: string): boolean {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 class:list={[
-                  "block rounded-none px-4 py-2.5 text-sm font-medium transition-colors duration-[var(--duration-control)] hover:bg-[var(--color-surface)]",
-                  active ? "text-[var(--color-brand)]" : "text-[var(--color-text-primary)]",
+                  "nav-link block px-4 py-2.5 text-sm font-medium",
+                  active
+                    ? "is-active text-[var(--color-brand)]"
+                    : "text-[var(--color-text-primary)]",
                 ]}
               >
                 {item.label}
@@ -86,6 +100,40 @@ function isActive(href: string, path: string): boolean {
 </nav>
 
 <style>
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.4rem;
+    height: 2px;
+    background: var(--color-brand);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-control) var(--ease-orbit);
+  }
+
+  .nav-link:hover::after,
+  .nav-link[aria-expanded="true"]::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .dropdown-panel {
+    transform: translateY(-4px);
+    transition:
+      opacity var(--duration-control) var(--ease-orbit),
+      transform var(--duration-control) var(--ease-orbit),
+      visibility var(--duration-control) var(--ease-orbit);
+  }
+
   [data-dropdown]:hover .dropdown-panel,
   [data-dropdown]:focus-within .dropdown-panel,
   [data-dropdown] .dropdown-trigger[aria-expanded="true"] ~ .dropdown-panel {
@@ -95,7 +143,8 @@ function isActive(href: string, path: string): boolean {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dropdown-panel {
+    .dropdown-panel,
+    .nav-link::after {
       transition: opacity 1ms linear;
     }
   }

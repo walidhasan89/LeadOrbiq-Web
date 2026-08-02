@@ -8,117 +8,191 @@ interface Props {
   currentPath: string;
 }
 const { currentPath } = Astro.props;
+
+// Dropdown children (Product, Resources) repeat some of the same
+// destinations as their own top-level shortcuts (Use Cases, Pricing) — fine
+// on desktop where they're two separate visual contexts, but flattened into
+// one mobile list that would show duplicate rows. De-dupe by href, keeping
+// first occurrence, so every destination appears exactly once.
+const seen = new Set<string>();
+const links = primaryNav
+  .flatMap((item) => (item.children && item.children.length > 0 ? item.children : [item]))
+  .filter((link) => {
+    if (seen.has(link.href)) return false;
+    seen.add(link.href);
+    return true;
+  });
 ---
 
 <button
   type="button"
   id="mobile-nav-trigger"
-  class="flex h-11 w-11 items-center justify-center rounded-none border border-[var(--color-border)] bg-[var(--color-surface)] lg:hidden"
+  class="hamburger-btn relative flex h-11 w-11 shrink-0 items-center justify-center border border-[var(--color-border)] bg-[var(--color-surface)] lg:hidden"
   aria-label="Open menu"
   aria-expanded="false"
   aria-controls="mobile-nav-panel"
 >
-  <svg
-    aria-hidden="true"
-    class="h-5 w-5"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.7"
-    stroke-linecap="round"
-  >
-    <path d="M4 7h16M4 12h16M4 17h16"></path>
-  </svg>
+  <span class="relative block h-3.5 w-5" aria-hidden="true">
+    <span class="hamburger-bar hamburger-bar-top absolute left-0 top-0 h-0.5 w-full bg-current"
+    ></span>
+    <span
+      class="hamburger-bar hamburger-bar-mid absolute left-0 top-1/2 h-0.5 w-full -translate-y-1/2 bg-current"
+    ></span>
+    <span class="hamburger-bar hamburger-bar-bottom absolute bottom-0 left-0 h-0.5 w-full bg-current"
+    ></span>
+  </span>
 </button>
 
 <div
   id="mobile-nav-panel"
-  class="mobile-nav-panel invisible fixed inset-0 z-[100] flex justify-end opacity-0 lg:hidden"
+  class="mobile-nav-panel invisible fixed inset-0 z-[100] flex flex-col bg-[var(--ink-950)] text-[var(--color-text-inverted)] opacity-0 lg:hidden"
   role="dialog"
   aria-modal="true"
   aria-label="Site menu"
   hidden
 >
-  <div
-    class="mobile-nav-backdrop absolute inset-0 bg-[var(--ink-950)]/60 backdrop-blur-sm"
-    data-nav-backdrop
-  >
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <svg class="h-full w-full opacity-40" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="mobile-nav-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M48 0H0V48" fill="none" stroke="rgba(159,178,214,0.1)" stroke-width="1"></path>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#mobile-nav-grid)"></rect>
+    </svg>
+    <div
+      class="absolute -top-24 right-[-20%] h-80 w-80 rounded-full opacity-50 blur-3xl"
+      style="background: radial-gradient(circle, color-mix(in srgb, var(--mint) 55%, transparent), transparent 70%);"
+    >
+    </div>
   </div>
 
-  <div
-    class="glass-panel-strong relative flex h-full w-full max-w-sm flex-col gap-8 overflow-y-auto rounded-l-[var(--radius-panel)] p-6"
-  >
-    <div class="flex items-center justify-between">
-      <span class="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
-        >Menu</span
+  <div class="relative flex items-center justify-between px-5 pt-5 sm:px-8">
+    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">Menu</span>
+    <button
+      type="button"
+      id="mobile-nav-close"
+      class="flex h-10 w-10 items-center justify-center border border-white/15 text-white"
+      aria-label="Close menu"
+    >
+      <svg
+        aria-hidden="true"
+        class="h-5 w-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
       >
-      <button
-        type="button"
-        id="mobile-nav-close"
-        class="flex h-10 w-10 items-center justify-center rounded-none border border-[var(--color-border)]"
-        aria-label="Close menu"
-      >
-        <svg
-          aria-hidden="true"
-          class="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.7"
-          stroke-linecap="round"
-        >
-          <path d="M6 6l12 12M18 6 6 18"></path>
-        </svg>
-      </button>
-    </div>
+        <path d="M6 6l12 12M18 6 6 18"></path>
+      </svg>
+    </button>
+  </div>
 
-    <nav aria-label="Mobile" class="flex flex-col gap-1">
+  <nav aria-label="Mobile" class="relative flex flex-1 flex-col justify-center px-5 sm:px-8">
+    <ul class="flex flex-col">
       {
-        primaryNav
-          .flatMap((item) => (item.children && item.children.length > 0 ? item.children : [item]))
-          .map((link) => (
+        links.map((link, index) => (
+          <li
+            class="mobile-nav-item overflow-hidden border-b border-white/10 first:border-t"
+            style={`--stagger: ${index}`}
+          >
             <a
               href={link.href}
               data-mobile-link
               aria-current={
-                currentPath.replace(/\/$/, "") === link.href.replace(/\/$/, "") ? "page" : undefined
+                currentPath.replace(/\/$/, "") === link.href.replace(/\/$/, "")
+                  ? "page"
+                  : undefined
               }
-              class="rounded-[var(--radius-md)] px-3 py-3.5 text-lg font-medium text-[var(--color-text-primary)] transition-colors hover:bg-[var(--color-surface)]"
+              class="group flex items-center gap-4 py-4"
             >
-              {link.label}
+              <span class="text-xs font-semibold text-[var(--mint)]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="flex-1 text-3xl font-bold tracking-tight text-white transition-transform duration-[var(--duration-control)] group-hover:translate-x-2 sm:text-4xl">
+                {link.label}
+              </span>
+              <svg
+                aria-hidden="true"
+                class="h-5 w-5 shrink-0 -translate-x-2 text-[var(--mint)] opacity-0 transition-all duration-[var(--duration-control)] group-hover:translate-x-0 group-hover:opacity-100"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 8h10M8.5 3.5 13 8l-4.5 4.5" />
+              </svg>
             </a>
-          ))
+          </li>
+        ))
       }
-    </nav>
+    </ul>
+  </nav>
 
-    <div class="mt-auto flex flex-col gap-4 border-t border-[var(--color-border)] pt-6">
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-[var(--color-text-secondary)]">Theme</span>
-        <ThemeToggle />
-      </div>
-      <Button href={siteConfig.chromeStoreUrl} external variant="primary" size="lg" class="w-full">
-        Add to Chrome
-      </Button>
+  <div class="relative flex flex-col gap-4 border-t border-white/10 px-5 py-6 sm:px-8">
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-white/60">Theme</span>
+      <ThemeToggle />
     </div>
+    <Button href={siteConfig.chromeStoreUrl} external variant="primary" size="lg" class="w-full">
+      Add to Chrome
+    </Button>
   </div>
 </div>
 
 <style>
+  .hamburger-bar {
+    transition:
+      transform var(--duration-control) var(--ease-orbit),
+      opacity var(--duration-control) var(--ease-orbit);
+  }
+
+  .hamburger-btn[aria-expanded="true"] .hamburger-bar-top {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .hamburger-btn[aria-expanded="true"] .hamburger-bar-mid {
+    opacity: 0;
+    transform: translateY(-50%) scaleX(0);
+  }
+
+  .hamburger-btn[aria-expanded="true"] .hamburger-bar-bottom {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
   .mobile-nav-panel {
     transition:
-      opacity var(--duration-control) var(--ease-orbit),
-      visibility var(--duration-control) var(--ease-orbit);
+      opacity var(--duration-card) var(--ease-orbit),
+      visibility var(--duration-card) var(--ease-orbit);
   }
+
   .mobile-nav-panel.is-open {
     visibility: visible;
     opacity: 1;
   }
-  .mobile-nav-panel .glass-panel-strong {
-    transform: translateX(16px);
-    transition: transform var(--duration-card) var(--ease-orbit);
+
+  .mobile-nav-item {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity var(--duration-card) var(--ease-orbit),
+      transform var(--duration-card) var(--ease-orbit);
+    transition-delay: calc(var(--stagger) * 55ms);
   }
-  .mobile-nav-panel.is-open .glass-panel-strong {
-    transform: translateX(0);
+
+  .mobile-nav-panel.is-open .mobile-nav-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hamburger-bar,
+    .mobile-nav-item {
+      transition-delay: 0ms;
+    }
   }
 </style>
 
@@ -126,7 +200,6 @@ const { currentPath } = Astro.props;
   const trigger = document.getElementById("mobile-nav-trigger");
   const panel = document.getElementById("mobile-nav-panel");
   const closeBtn = document.getElementById("mobile-nav-close");
-  const backdrop = panel?.querySelector<HTMLElement>("[data-nav-backdrop]");
 
   if (trigger && panel && closeBtn) {
     const focusableSelector =
@@ -157,12 +230,11 @@ const { currentPath } = Astro.props;
       trigger!.focus();
       setTimeout(() => {
         if (!panel!.classList.contains("is-open")) panel!.hidden = true;
-      }, 260);
+      }, 320);
     }
 
     trigger.addEventListener("click", openMenu);
     closeBtn.addEventListener("click", closeMenu);
-    backdrop?.addEventListener("click", closeMenu);
 
     panel.querySelectorAll<HTMLAnchorElement>("[data-mobile-link]").forEach((link) => {
       link.addEventListener("click", closeMenu);

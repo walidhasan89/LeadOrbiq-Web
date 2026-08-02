@@ -87,9 +87,12 @@
   h2,
   h3,
   h4 {
-    letter-spacing: -0.01em;
-    line-height: 1.08;
-    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    /* 700 exactly matches a loaded Satoshi weight (see the Fontshare <link>
+       in BaseLayout.astro) instead of forcing the browser to fake-bold or
+       snap to the nearest loaded face. */
+    font-weight: 700;
   }
 
   p {

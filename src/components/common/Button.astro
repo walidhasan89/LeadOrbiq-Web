@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-button)] font-semibold transition-[transform,box-shadow,background-color,color,border-color] duration-[var(--duration-control)] ease-[var(--ease-orbit)] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-button)] font-semibold transition-[transform,box-shadow,background-color,color,border-color] duration-[var(--duration-micro)] ease-[var(--ease-orbit)] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50";
 
 const sizes = {
   md: "min-h-11 px-5 text-[0.95rem]",
@@ -33,9 +33,9 @@ const sizes = {
 
 const variants = {
   primary:
-    "bg-[image:var(--gradient-brand)] text-white shadow-[var(--shadow-glow)] hover:-translate-y-0.5 hover:shadow-[0_28px_70px_-24px_rgba(18,183,106,0.5)] active:translate-y-0",
+    "border-2 border-[var(--color-text-primary)] bg-[image:var(--gradient-brand)] text-white shadow-[4px_4px_0_0_var(--color-text-primary)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--color-text-primary)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none",
   secondary:
-    "glass-panel !rounded-[var(--radius-button)] text-[var(--color-text-primary)] border border-[var(--color-border-strong)] hover:-translate-y-0.5 hover:border-[var(--color-brand)] active:translate-y-0",
+    "!rounded-[var(--radius-button)] border-2 border-[var(--color-text-primary)] bg-[var(--color-bg-elevated)] text-[var(--color-text-primary)] shadow-[4px_4px_0_0_var(--color-border-strong)] hover:translate-x-[2px] hover:translate-y-[2px] hover:border-[var(--color-brand)] hover:shadow-[2px_2px_0_0_var(--color-border-strong)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none",
   text: "text-[var(--color-brand)] underline-offset-4 hover:underline px-0 min-h-0",
 };
 

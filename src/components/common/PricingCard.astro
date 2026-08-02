@@ -13,10 +13,10 @@ const { plan, class: className = "" } = Astro.props;
 
 <div
   class:list={[
-    "relative flex flex-col gap-6 rounded-[var(--radius-panel)] border p-8 transition-[transform,box-shadow] duration-[var(--duration-card)] ease-[var(--ease-orbit)] hover:-translate-y-1",
+    "relative flex flex-col gap-6 rounded-[var(--radius-panel)] border-2 p-8 transition-[transform,box-shadow] duration-[var(--duration-card)] ease-[var(--ease-orbit)]",
     plan.featured
-      ? "border-[var(--color-brand)] bg-[var(--color-surface-strong)] shadow-[var(--shadow-glow)]"
-      : "border-[var(--color-border)] bg-[var(--color-surface)]",
+      ? "-translate-x-1 -translate-y-1 border-[var(--color-text-primary)] bg-[var(--color-surface-strong)] shadow-[6px_6px_0_0_var(--color-brand)]"
+      : "border-[var(--color-border)] bg-[var(--color-surface)] hover:-translate-x-1 hover:-translate-y-1 hover:border-[var(--color-text-primary)] hover:shadow-[6px_6px_0_0_var(--color-text-primary)]",
     className,
   ]}
 >
