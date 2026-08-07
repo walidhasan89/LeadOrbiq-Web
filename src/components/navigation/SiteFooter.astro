@@ -136,34 +136,13 @@ const uid = crypto.randomUUID().slice(0, 8);
     </div>
 
     <div
-      class="mt-14 flex flex-col gap-6 border-t border-[var(--color-border)] pt-8 text-sm text-[var(--color-text-secondary)] sm:flex-row sm:items-center sm:justify-between"
+      class="mt-14 flex flex-col gap-2 border-t border-[var(--color-border)] pt-8 text-sm text-[var(--color-text-secondary)]"
     >
-      <div class="flex flex-col gap-2">
-        <p>&copy; {year} LeadOrbiq. All rights reserved.</p>
-        <p class="max-w-2xl text-xs text-[var(--color-text-secondary)]">
-          LeadOrbiq is an independent Chrome extension and is not affiliated with, endorsed by, or
-          sponsored by Google. "Google Maps" is a trademark of Google LLC.
-        </p>
-      </div>
-      <a
-        href="#top"
-        data-back-to-top
-        class="group inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-none border border-[var(--color-border)] px-4 py-2 text-xs font-medium text-[var(--color-text-secondary)] transition-colors hover:border-[var(--mint)]/40 hover:text-[var(--color-text-primary)] sm:self-auto"
-      >
-        Back to top
-        <svg
-          aria-hidden="true"
-          class="h-3.5 w-3.5 shrink-0 text-[var(--mint)] transition-transform group-hover:-translate-y-0.5"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M8 12.5V3.5M4 7.5 8 3.5l4 4" />
-        </svg>
-      </a>
+      <p>&copy; {year} LeadOrbiq. All rights reserved.</p>
+      <p class="max-w-2xl text-xs text-[var(--color-text-secondary)]">
+        LeadOrbiq is an independent Chrome extension and is not affiliated with, endorsed by, or
+        sponsored by Google. "Google Maps" is a trademark of Google LLC.
+      </p>
     </div>
   </Container>
 </footer>
@@ -209,12 +188,3 @@ const uid = crypto.randomUUID().slice(0, 8);
     );
   }
 </style>
-
-<script>
-  document.querySelectorAll<HTMLAnchorElement>("[data-back-to-top]").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  });
-</script>

@@ -1,0 +1,72 @@
+---
+// Floating scroll-to-top button. Hidden until the user scrolls past the
+// first viewport, then eases in at the bottom-right corner — sitewide via
+// BaseLayout.astro, replacing the old footer-only text link. Sits higher on
+// mobile/tablet (below xl) to clear SectionRail's mobile scroll-progress
+// pill, which docks at the bottom on the homepage.
+---
+
+<button
+  type="button"
+  id="scroll-to-top"
+  class="scroll-to-top-btn fixed bottom-20 right-4 z-40 flex h-12 w-12 items-center justify-center border-2 border-[var(--color-text-primary)] bg-[image:var(--gradient-brand)] text-white shadow-[4px_4px_0_0_var(--color-text-primary)] transition-[opacity,transform,box-shadow] duration-[var(--duration-control)] ease-[var(--ease-orbit)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--color-text-primary)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none xl:bottom-6 xl:right-6"
+  aria-label="Back to top"
+>
+  <svg
+    aria-hidden="true"
+    class="h-5 w-5 shrink-0"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M8 12.5V3.5M4 7.5 8 3.5l4 4" />
+  </svg>
+</button>
+
+<style>
+  .scroll-to-top-btn {
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+  }
+
+  .scroll-to-top-btn.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  const button = document.getElementById("scroll-to-top");
+
+  if (button) {
+    const THRESHOLD = window.innerHeight * 0.6;
+    let ticking = false;
+
+    function updateVisibility() {
+      button!.classList.toggle("is-visible", window.scrollY > THRESHOLD);
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(updateVisibility);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+
+    updateVisibility();
+
+    button.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+</script>

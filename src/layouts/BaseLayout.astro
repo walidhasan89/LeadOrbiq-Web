@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import SEOHead from "@components/seo/SEOHead.astro";
 import PageLoader from "@components/common/PageLoader.astro";
+import ScrollToTop from "@components/common/ScrollToTop.astro";
 import type { SEOProps } from "@/types";
 
 interface Props extends SEOProps {}
@@ -56,6 +57,7 @@ const props = Astro.props;
     <a href="#main-content" class="skip-link">Skip to content</a>
     <PageLoader />
     <slot />
+    <ScrollToTop />
 
     <script>
       // Page-load preloader: shown briefly on an outgoing internal-page click
