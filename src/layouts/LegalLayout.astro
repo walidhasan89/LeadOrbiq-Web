@@ -53,8 +53,10 @@ const { lastUpdated, ...seo } = Astro.props;
   .legal-prose :global(a) {
     color: var(--color-brand);
     text-underline-offset: 3px;
+    transition: opacity var(--duration-control) var(--ease-orbit);
   }
   .legal-prose :global(a:hover) {
     text-decoration: underline;
+    opacity: 0.75;
   }
 </style>

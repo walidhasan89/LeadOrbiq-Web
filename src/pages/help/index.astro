@@ -131,6 +131,11 @@ const categoriesInUse = helpCategories.filter((category) =>
     background-color: color-mix(in srgb, var(--color-brand) 12%, transparent);
     color: var(--color-brand);
   }
+
+  .category-pill:not([aria-pressed="true"]):hover {
+    border-color: color-mix(in srgb, var(--color-brand) 50%, transparent);
+    color: var(--color-brand);
+  }
 </style>
 
 <script>

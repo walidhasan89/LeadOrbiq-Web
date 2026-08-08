@@ -31,7 +31,7 @@ import { howItWorksSteps } from "@data/workflow";
             <button
               type="button"
               data-step={step.step}
-              class="how-step group flex flex-col gap-1.5 rounded-[var(--radius-card)] border border-transparent p-5 text-left transition-[background-color,border-color] duration-[var(--duration-control)] aria-selected:border-[var(--color-brand)]/35 aria-selected:bg-[var(--color-surface)]"
+              class="how-step group flex flex-col gap-1.5 rounded-[var(--radius-card)] border border-transparent p-5 text-left transition-[background-color,border-color] duration-[var(--duration-control)] hover:border-[var(--color-border)] hover:bg-[var(--color-surface)] aria-selected:border-[var(--color-brand)]/35 aria-selected:bg-[var(--color-surface)]"
               aria-selected={step.step === 1 ? "true" : "false"}
             >
               <span class="flex items-center gap-3 text-sm font-semibold text-[var(--color-brand)]">

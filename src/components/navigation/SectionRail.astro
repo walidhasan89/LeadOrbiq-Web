@@ -137,9 +137,13 @@ import { homepageSections } from "@data/navigation";
       const target = id ? document.getElementById(id) : null;
       if (!target) return;
       event.preventDefault();
-      const headerOffset = 96;
-      const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
-      window.scrollTo({ top, behavior: "smooth" });
+      const headerOffset = -96;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(target, { offset: headerOffset });
+      } else {
+        const top = target.getBoundingClientRect().top + window.scrollY + headerOffset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
       history.replaceState(null, "", `#${id}`);
       target.setAttribute("tabindex", "-1");
       target.focus({ preventScroll: true });

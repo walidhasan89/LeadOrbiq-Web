@@ -85,9 +85,11 @@ const dateLabel = new Intl.DateTimeFormat("en-US", {
   .help-article-prose :global(a) {
     color: var(--color-brand);
     text-underline-offset: 3px;
+    transition: opacity var(--duration-control) var(--ease-orbit);
   }
   .help-article-prose :global(a:hover) {
     text-decoration: underline;
+    opacity: 0.75;
   }
   .help-article-prose :global(strong) {
     color: var(--color-text-primary);

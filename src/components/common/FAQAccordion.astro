@@ -21,11 +21,11 @@ const { items, class: className = "", idPrefix = "faq" } = Astro.props;
       const id = `${idPrefix}-${index}`;
       return (
         <details id={id} class="group px-6 py-1 first:pt-1 last:pb-1 open:pb-5">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-base font-medium text-[var(--color-text-primary)] marker:content-none focus-visible:outline-none">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left text-base font-medium text-[var(--color-text-primary)] marker:content-none transition-colors duration-[var(--duration-control)] hover:text-[var(--color-brand)] focus-visible:outline-none">
             <span>{item.question}</span>
             <svg
               aria-hidden="true"
-              class="h-4 w-4 shrink-0 text-[var(--color-text-secondary)] transition-transform duration-[var(--duration-control)] group-open:rotate-45"
+              class="h-4 w-4 shrink-0 text-[var(--color-text-secondary)] transition-[transform,color] duration-[var(--duration-control)] group-open:rotate-45 group-open:text-[var(--color-brand)] group-hover:text-[var(--color-brand)]"
               viewBox="0 0 16 16"
               fill="none"
               stroke="currentColor"
