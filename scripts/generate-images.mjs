@@ -1,9 +1,9 @@
 /**
- * One-off generator for raster brand assets (OG image, touch icons) built
- * from inline SVG using sharp. Not wired into the build — social platforms
- * and iOS need real raster files, so these are generated once and committed
- * to public/. Re-run manually with `node scripts/generate-images.mjs` if the
- * brand mark changes.
+ * One-off generator for raster brand assets (OG image, favicons, touch
+ * icons) built with sharp from the real brand logo. Not wired into the
+ * build — social platforms and iOS need real raster files, so these are
+ * generated once and committed to public/. Re-run manually with
+ * `node scripts/generate-images.mjs` if the brand mark changes.
  */
 import sharp from "sharp";
 import { mkdir } from "node:fs/promises";
@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.join(__dirname, "..", "public");
+const logoPath = path.join(__dirname, "..", "src", "assets", "brand", "logo.png");
 
 const ogSvg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
@@ -39,13 +40,6 @@ const ogSvg = `
   <circle cx="1130" cy="360" r="16" fill="#32D583"/>
   <circle cx="810" cy="560" r="10" fill="#32D583"/>
 
-  <!-- logo mark -->
-  <g transform="translate(96 92)">
-    <ellipse cx="24" cy="24" rx="26" ry="15" transform="rotate(-24 24 24)" fill="none" stroke="#32D583" stroke-width="4"/>
-    <circle cx="24" cy="24" r="11" fill="#32D583"/>
-    <circle cx="24" cy="24" r="4.2" fill="#050816"/>
-    <circle cx="45" cy="12" r="5" fill="#32D583"/>
-  </g>
   <text x="164" y="122" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#F6F8FF">LeadOrbiq</text>
 
   <text x="96" y="270" font-family="Arial, sans-serif" font-size="58" font-weight="700" fill="#F6F8FF">
@@ -67,15 +61,37 @@ async function main() {
   await mkdir(path.join(publicDir, "images"), { recursive: true });
   await mkdir(path.join(publicDir, "icons"), { recursive: true });
 
-  await sharp(Buffer.from(ogSvg)).png().toFile(path.join(publicDir, "images", "og-default.png"));
+  // OG image: real logo composited at the top-left, next to the wordmark.
+  const logoForOg = await sharp(logoPath).resize(72, 72).toBuffer();
+  await sharp(Buffer.from(ogSvg))
+    .composite([{ input: logoForOg, left: 96, top: 78 }])
+    .png()
+    .toFile(path.join(publicDir, "images", "og-default.png"));
 
-  const faviconSvgPath = path.join(publicDir, "favicon.svg");
-  await sharp(faviconSvgPath).resize(180, 180).png().toFile(path.join(publicDir, "icons", "apple-touch-icon.png"));
-  await sharp(faviconSvgPath).resize(192, 192).png().toFile(path.join(publicDir, "icons", "icon-192.png"));
-  await sharp(faviconSvgPath).resize(512, 512).png().toFile(path.join(publicDir, "icons", "icon-512.png"));
-  await sharp(faviconSvgPath).resize(32, 32).png().toFile(path.join(publicDir, "icons", "favicon-32.png"));
+  // Favicons / PWA icons: transparent background, letterboxed to a square
+  // so the full circular mark stays intact instead of being cropped.
+  const transparentSizes = [
+    { file: "favicon-16.png", size: 16 },
+    { file: "favicon-32.png", size: 32 },
+    { file: "icon-192.png", size: 192 },
+    { file: "icon-512.png", size: 512 },
+  ];
+  for (const { file, size } of transparentSizes) {
+    await sharp(logoPath)
+      .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toFile(path.join(publicDir, "icons", file));
+  }
 
-  console.log("Generated og-default.png and icon set in public/images and public/icons");
+  // Apple touch icon: flattened onto white — iOS renders transparent PNG
+  // corners as solid black on the home screen otherwise.
+  await sharp(logoPath)
+    .resize(180, 180, { fit: "contain", background: "#ffffff" })
+    .flatten({ background: "#ffffff" })
+    .png()
+    .toFile(path.join(publicDir, "icons", "apple-touch-icon.png"));
+
+  console.log("Generated og-default.png, favicons, and touch icons from the brand logo");
 }
 
 main().catch((error) => {
